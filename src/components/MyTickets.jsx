@@ -53,9 +53,7 @@ export function MyTickets() {
               key={t.id}
               className="bg-white border border-gray-100 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row transition-transform hover:scale-[1.01]"
             >
-              {/* LADO ESQUERDO: INFO DO EVENTO */}
               <div className="p-8 flex-1 border-b md:border-b-0 md:border-r border-dashed border-gray-200 relative bg-white">
-                {/* Efeito de recorte de bilhete (bolinhas nas laterais) */}
                 <div className="hidden md:block absolute -right-3 -top-3 w-6 h-6 bg-gray-50 rounded-full border border-gray-100 shadow-inner"></div>
                 <div className="hidden md:block absolute -right-3 -bottom-3 w-6 h-6 bg-gray-50 rounded-full border border-gray-100 shadow-inner"></div>
 
@@ -97,7 +95,6 @@ export function MyTickets() {
                 </div>
               </div>
 
-              {/* LADO DIREITO: QR CODE */}
               <div className="bg-gray-50 p-10 flex flex-col items-center justify-center min-w-[260px] border-l border-gray-50">
                 <div className="bg-white p-5 rounded-[2rem] shadow-xl border border-gray-100">
                   <QRCode

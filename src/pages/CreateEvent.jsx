@@ -21,10 +21,10 @@ export function CreateEvent() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:3000/events", formData, {
-        headers: { Authorization: `Bearer ${token}` }, // Envia o token para identificar o dono
+        headers: { Authorization: `Bearer ${token}` },
       });
       alert("Evento criado com sucesso!");
-      navigate("/"); // Volta para a home para ver o card novo
+      navigate("/");
     } catch (err) {
       alert(
         "Erro ao criar evento. Verifique se todos os campos estão preenchidos."

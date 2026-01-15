@@ -69,7 +69,6 @@ export function Dashboard() {
         </Link>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
           <TrendingUp className="text-indigo-600 mb-4" size={32} />
@@ -87,7 +86,6 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* Lista de Eventos */}
       <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-gray-50 border-b border-gray-100">

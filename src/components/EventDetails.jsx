@@ -47,7 +47,6 @@ export function EventDetails() {
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* Coluna Principal */}
         <div className="lg:col-span-2">
           <img
             src={event.imageUrl}
@@ -79,7 +78,6 @@ export function EventDetails() {
           </div>
         </div>
 
-        {/* Card Lateral de Compra */}
         <div className="lg:col-span-1">
           <div className="bg-white p-8 rounded-[32px] shadow-xl border border-gray-100 sticky top-28">
             <div className="flex items-center gap-3 mb-6">

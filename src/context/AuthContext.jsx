@@ -6,7 +6,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("@EventFlow:token"));
 
-  // Tenta recuperar o usuário do localStorage ao carregar a página
   useEffect(() => {
     const storagedUser = localStorage.getItem("@EventFlow:user");
     if (storagedUser && token) {
@@ -15,11 +14,9 @@ export function AuthProvider({ children }) {
   }, [token]);
 
   const login = (userData, userToken) => {
-    // 1. Atualiza o estado
     setUser(userData);
     setToken(userToken);
 
-    // 2. Salva no localStorage (precisa ser String)
     localStorage.setItem("@EventFlow:token", userToken);
     localStorage.setItem("@EventFlow:user", JSON.stringify(userData));
   };
