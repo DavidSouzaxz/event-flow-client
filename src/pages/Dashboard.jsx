@@ -22,7 +22,7 @@ export function Dashboard() {
 
   const fetchEvents = () => {
     axios
-      .get("http://localhost:3000/my-events", {
+      .get(`${import.meta.env.VITE_API_URL}/my-events`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setMyEvents(res.data));
@@ -35,7 +35,7 @@ export function Dashboard() {
       )
     ) {
       try {
-        await axios.delete(`http://localhost:3000/events/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/events/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchEvents();

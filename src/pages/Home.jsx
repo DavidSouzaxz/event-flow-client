@@ -14,7 +14,7 @@ export function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/events")
+      .get(`${import.meta.env.VITE_API_URL}/events`)
       .then((res) => {
         setEvents(res.data);
         setFilteredEvents(res.data);

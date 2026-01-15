@@ -12,7 +12,7 @@ export function MyTickets() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/my-tickets", {
+      .get(`${import.meta.env.VITE_API_URL}/my-tickets`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

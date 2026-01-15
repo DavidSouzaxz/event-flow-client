@@ -20,7 +20,7 @@ export function CreateEvent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/events", formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/events`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Evento criado com sucesso!");

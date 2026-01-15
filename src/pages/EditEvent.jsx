@@ -18,9 +18,7 @@ export function EditEvent() {
   });
 
   useEffect(() => {
-    // Carrega os dados atuais do evento
-    axios.get(`http://localhost:3000/events/${id}`).then((res) => {
-      // Formata a data para o input datetime-local
+    axios.get(`${import.meta.env.VITE_API_URL}/events/${id}`).then((res) => {
       const date = new Date(res.data.date).toISOString().slice(0, 16);
       setFormData({ ...res.data, date });
     });
@@ -29,9 +27,13 @@ export function EditEvent() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/events/${id}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/events/${id}`,
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       alert("Evento atualizado!");
       navigate("/dashboard");
     } catch (err) {

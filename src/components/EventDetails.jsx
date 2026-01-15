@@ -12,7 +12,7 @@ export function EventDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/events/${id}`)
+      .get(`${import.meta.env.VITE_API_URL}/events/${id}`)
       .then((res) => setEvent(res.data));
   }, [id]);
 
@@ -21,7 +21,7 @@ export function EventDetails() {
 
     try {
       await axios.post(
-        `http://localhost:3000/bookings`,
+        `${import.meta.env.VITE_API_URL}/bookings`,
         { eventId: id },
         {
           headers: { Authorization: `Bearer ${token}` },
