@@ -9,6 +9,7 @@ import { MyTickets } from "./pages/MyTickets";
 import { CreateEvent } from "./pages/CreateEvent";
 import { Dashboard } from "./pages/Dashboard";
 import { EditEvent } from "./pages/EditEvent";
+import PrivateRoute from "./context/PrivateRoute";
 
 function App() {
   return (
@@ -22,9 +23,30 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/my-tickets" element={<MyTickets />} />
             <Route path="/event/:id" element={<EventDetails />} />
-            <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/edit-event/:id" element={<EditEvent />} />
+            <Route
+              path="/create-event"
+              element={
+                <PrivateRoute>
+                  <CreateEvent />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/edit-event/:id"
+              element={
+                <PrivateRoute>
+                  <EditEvent />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </div>
       </Router>
