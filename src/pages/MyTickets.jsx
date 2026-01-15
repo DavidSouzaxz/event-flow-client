@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { QRCodeSVG } from "qrcode.react";
 import { Ticket, MapPin, Calendar } from "lucide-react";
+import api from "../services/api";
 
 export function MyTickets() {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("@EventFlow:token");
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/my-tickets`, {
+    api
+      .get(`/my-tickets`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setTickets(res.data));

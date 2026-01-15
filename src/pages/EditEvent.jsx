@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { Save, ArrowLeft } from "lucide-react";
+import api from "../services/api";
 
 export function EditEvent() {
   const { id } = useParams();
@@ -18,7 +19,7 @@ export function EditEvent() {
   });
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/events/${id}`).then((res) => {
+    api.get(`/events/${id}`).then((res) => {
       const date = new Date(res.data.date).toISOString().slice(0, 16);
       setFormData({ ...res.data, date });
     });
@@ -27,13 +28,9 @@ export function EditEvent() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
-        `${import.meta.env.VITE_API_URL}/events/${id}`,
-        formData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await api.put(`/events/${id}`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       alert("Evento atualizado!");
       navigate("/dashboard");
     } catch (err) {

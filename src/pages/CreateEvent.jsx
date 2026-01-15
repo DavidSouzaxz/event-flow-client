@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { ImagePlus, MapPin, Calendar, DollarSign } from "lucide-react";
 import { Save, ArrowLeft } from "lucide-react";
+import api from "../services/api";
 
 export function CreateEvent() {
   const { token } = useAuth();
@@ -20,7 +21,7 @@ export function CreateEvent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/events`, formData, {
+      await api.post(`/events`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Evento criado com sucesso!");

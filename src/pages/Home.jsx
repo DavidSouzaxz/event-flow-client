@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { MapPin, Calendar, Search, ArrowRight, X } from "lucide-react";
+import api from "../services/api";
 
 export function Home() {
   const [events, setEvents] = useState([]);
@@ -13,8 +14,8 @@ export function Home() {
   const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/events`)
+    api
+      .get(`/events`)
       .then((res) => {
         setEvents(res.data);
         setFilteredEvents(res.data);

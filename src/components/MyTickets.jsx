@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import QRCode from "react-qr-code";
 import { Ticket, Calendar, MapPin, Download, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import api from "../services/api";
 
 export function MyTickets() {
   const [tickets, setTickets] = useState([]);
@@ -11,8 +12,8 @@ export function MyTickets() {
   const { token } = useAuth();
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/my-tickets`, {
+    api
+      .get(`/my-tickets`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

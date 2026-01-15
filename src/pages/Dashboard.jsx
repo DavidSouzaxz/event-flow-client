@@ -11,6 +11,7 @@ import {
   Plus,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import api from "../services/api";
 
 export function Dashboard() {
   const [myEvents, setMyEvents] = useState([]);
@@ -21,8 +22,8 @@ export function Dashboard() {
   }, []);
 
   const fetchEvents = () => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/my-events`, {
+    api
+      .get(`/my-events`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setMyEvents(res.data));
@@ -35,7 +36,7 @@ export function Dashboard() {
       )
     ) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/events/${id}`, {
+        await api.delete(`/events/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchEvents();

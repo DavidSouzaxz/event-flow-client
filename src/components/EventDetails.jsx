@@ -11,17 +11,15 @@ export function EventDetails() {
   const [event, setEvent] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/events/${id}`)
-      .then((res) => setEvent(res.data));
+    api.get(`/events/${id}`).then((res) => setEvent(res.data));
   }, [id]);
 
   const handleBooking = async () => {
     if (!signed) return navigate("/login");
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/bookings`,
+      await api.post(
+        `/bookings`,
         { eventId: id },
         {
           headers: { Authorization: `Bearer ${token}` },

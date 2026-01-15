@@ -13,10 +13,7 @@ export function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/register`,
-        formData
-      );
+      const response = await api.post(`/register`, formData);
       alert(`Bem-vindo, ${response.data.name}! Conta criada.`);
       navigate("/login");
     } catch (err) {
