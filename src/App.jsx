@@ -9,6 +9,7 @@ import { MyTickets } from "./pages/MyTickets";
 import { CreateEvent } from "./pages/CreateEvent";
 import { Dashboard } from "./pages/Dashboard";
 import { EditEvent } from "./pages/EditEvent";
+import NotFound from "./pages/NotFound";
 import PrivateRoute from "./context/PrivateRoute";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/my-tickets" element={<MyTickets />} />
             <Route path="/event/:id" element={<EventDetails />} />
+            <Route path="/not-found" element={<NotFound />} />
             <Route
               path="/create-event"
               element={
@@ -31,6 +33,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+
             <Route
               path="/dashboard"
               element={
@@ -39,6 +42,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+
             <Route
               path="/edit-event/:id"
               element={
