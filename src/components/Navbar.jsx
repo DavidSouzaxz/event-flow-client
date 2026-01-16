@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Ticket, LogOut, Calendar } from "lucide-react";
+import { useEffect } from "react";
+import api from "../services/api";
 
 export function Navbar() {
-  const { user, logout, signed } = useAuth();
+  const { user, logout, signed, info } = useAuth();
 
   return (
     <nav className="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between sticky top-0 z-50">
@@ -24,12 +26,14 @@ export function Navbar() {
             >
               <Ticket size={20} /> Meus Ingressos
             </Link>
-            <Link
-              to="/dashboard"
-              className="text-gray-600 hover:text-indigo-600 flex items-center gap-1 font-medium"
-            >
-              Painel de Controle
-            </Link>
+            {info?.role === "ADMIN" && (
+              <Link
+                to="/dashboard"
+                className="text-gray-600 hover:text-indigo-600 flex items-center gap-1 font-medium"
+              >
+                Painel de Controle
+              </Link>
+            )}
             <div className="flex items-center gap-3 pl-4 border-l">
               <span className="text-sm font-semibold text-gray-700">
                 Olá, {user?.name}

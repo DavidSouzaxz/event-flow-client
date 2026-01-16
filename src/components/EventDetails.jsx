@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { Calendar, MapPin, User, ChevronLeft, ShieldCheck } from "lucide-react";
+import api from "../services/api";
 
 export function EventDetails() {
   const { id } = useParams();
