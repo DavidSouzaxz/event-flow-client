@@ -58,6 +58,11 @@ export function Home() {
     setFilteredEvents(results);
   }, [searchTerm, events, activeFilter, priceLimit, selectedDate]);
 
+  const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
   return (
     <div className="min-h-screen bg-white">
       <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden">
@@ -203,8 +208,8 @@ export function Home() {
                   </div>
 
                   <div className="flex items-center justify-between pt-6 border-t border-gray-50">
-                    <span className="text-2xl font-black text-gray-900 tracking-tighter">
-                      {event.price === 0 ? "Grátis" : `R$ ${event.price}`}
+                    <span className="text-2xl font-bold text-gray-900 tracking-tighter">
+                      {event.price === 0 ? "Grátis" : currencyFormatter.format(event.price)}
                     </span>
                     <Link
                       to={`/event/${event.id}`}

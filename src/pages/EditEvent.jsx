@@ -13,6 +13,7 @@ export function EditEvent() {
     title: "",
     description: "",
     date: "",
+    capacity: "",
     location: "",
     price: "",
     imageUrl: "",
@@ -79,6 +80,21 @@ export function EditEvent() {
                 className="w-full p-5 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500 font-bold text-gray-900"
                 onChange={(e) =>
                   setFormData({ ...formData, date: e.target.value })
+                }
+                placeholder="Fortaleza, CE"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                Capacidade Total
+              </label>
+              <input
+                className="w-full p-5 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500 font-bold text-gray-900"
+                type="number"
+                placeholder="100"
+                value={formData.capacity}
+                onChange={(e) =>
+                  setFormData({ ...formData, capacity: e.target.value })
                 }
               />
             </div>

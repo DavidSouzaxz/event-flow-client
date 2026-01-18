@@ -104,9 +104,6 @@ export function MyTickets() {
                     fgColor="#111827"
                   />
                 </div>
-                <p className="mt-6 text-[10px] text-gray-400 font-black uppercase tracking-[0.2em] text-center">
-                  Válido para 1 entrada
-                </p>
               </div>
             </div>
           ))
