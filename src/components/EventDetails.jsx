@@ -10,6 +10,7 @@ export function EventDetails() {
   const navigate = useNavigate();
   const { token, signed } = useAuth();
   const [event, setEvent] = useState(null);
+  const [selectedTickets, setSelectedTickets] = useState(1);
 
   useEffect(() => {
     api.get(`/events/${id}`).then((res) => setEvent(res.data));
@@ -18,20 +19,29 @@ export function EventDetails() {
   const handleBooking = async () => {
     if (!signed) return navigate("/login");
 
+    if (selectedTickets > event.capacity) {
+      return alert("Quantidade selecionada maior que ingressos disponíveis.");
+    }
+
     try {
       await api.post(
         `/bookings`,
-        { eventId: id },
+        { eventId: id, quantity: selectedTickets },
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
-      alert("Ingresso garantido! Veja em 'Meus Ingressos'.");
+      alert("Ingresso(s) garantido(s)! Veja em 'Meus Ingressos'.");
       navigate("/my-tickets");
     } catch (err) {
       alert("Erro ao reservar ingresso.");
     }
   };
+
+  const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   if (!event)
     return <div className="p-20 text-center animate-pulse">Carregando...</div>;
@@ -40,7 +50,7 @@ export function EventDetails() {
     <div className="max-w-6xl mx-auto px-6 py-10">
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-gray-500 hover:text-indigo-600 mb-8 transition-colors"
+        className="flex items-center gap-2 text-gray-500 hover:text-indigo-600 mb-8 transition-colors hover:cursor-pointer font-bold uppercase text-xs tracking-widest"
       >
         <ChevronLeft size={20} /> Voltar para eventos
       </button>
@@ -95,7 +105,40 @@ export function EventDetails() {
               <div className="flex justify-between items-center text-gray-500">
                 <span>Preço unitário</span>
                 <span className="text-2xl font-black text-indigo-600">
-                  R$ {event.price}
+                  {event.price === 0
+                    ? "Gratuito"
+                    : currencyFormatter.format(event.price)}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 mt-6 text-sm text-gray-500 font-medium">
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">
+                  Quantidade
+                </label>
+                <select
+                  value={selectedTickets}
+                  onChange={(e) => setSelectedTickets(Number(e.target.value))}
+                  className="w-24 bg-gray-50 p-2 rounded-xl font-bold text-gray-900"
+                >
+                  {Array.from(
+                    { length: Math.min(10, event.capacity || 1) },
+                    (_, i) => i + 1,
+                  ).map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                </select>
+                <div className="text-xs text-gray-400 mt-1">
+                  Selecionado: {selectedTickets}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <User size={16} />
+                <span>
+                  Ingressos restantes - {event.capacity - selectedTickets}
                 </span>
               </div>
             </div>
@@ -104,7 +147,7 @@ export function EventDetails() {
               onClick={handleBooking}
               className="w-full mt-8 bg-gray-900 text-white py-5 rounded-2xl font-black text-lg hover:bg-indigo-600 transition-all duration-300 transform active:scale-95 shadow-xl shadow-gray-200"
             >
-              Reservar Ingresso
+              {`Reservar ${selectedTickets} ingresso${selectedTickets > 1 ? "s" : ""}`}
             </button>
 
             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium">

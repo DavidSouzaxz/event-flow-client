@@ -77,13 +77,24 @@ export function CreateEvent() {
               }
             />
           </div>
+          
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-2">Capacidade Total</label>
+            <input
+              type="number"
+              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Ex: 100"
+              onChange={(e) =>
+                setFormData({ ...formData, capacity: e.target.value })
+              }
+            />
+          </div>
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-2">
               Preço (R$)
             </label>
             <input
               type="number"
-              required
               className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="0.00"
               onChange={(e) =>
