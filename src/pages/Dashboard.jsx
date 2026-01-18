@@ -55,6 +55,7 @@ export function Dashboard() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
         <Loader2 className="animate-spin text-indigo-600" size={40} />
+        <p className="text-gray-500 font-medium italic">A carregar painel...</p>
       </div>
     );
 
