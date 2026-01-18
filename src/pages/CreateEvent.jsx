@@ -147,7 +147,7 @@ export function CreateEvent() {
           />
         </div>
 
-        <button className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 transition-all shadow-lg shadow-indigo-100">
+        <button className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 hover:cursor-pointer transition-all shadow-lg shadow-indigo-100">
           Publicar Evento
         </button>
       </form>

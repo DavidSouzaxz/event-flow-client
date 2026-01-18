@@ -127,7 +127,7 @@ export function Dashboard() {
                 </Link>
                 <button
                   onClick={() => handleDelete(event.id)}
-                  className="p-3 bg-gray-50 text-red-500 rounded-xl"
+                  className="p-3 bg-gray-50 text-red-500 rounded-xl hover:cursor-pointer"
                 >
                   <Trash2 size={18} />
                 </button>
@@ -176,13 +176,13 @@ export function Dashboard() {
                   <div className="flex justify-end gap-3">
                     <Link
                       to={`/edit-event/${event.id}`}
-                      className="text-gray-300 hover:text-indigo-600"
+                      className="text-gray-300 hover:text-indigo-600 hover:cursor-pointer"
                     >
                       <Edit size={20} />
                     </Link>
                     <button
                       onClick={() => handleDelete(event.id)}
-                      className="text-gray-300 hover:text-red-500"
+                      className="text-gray-300 hover:text-red-500 hover:cursor-pointer"
                     >
                       <Trash2 size={20} />
                     </button>

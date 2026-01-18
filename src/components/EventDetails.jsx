@@ -137,9 +137,7 @@ export function EventDetails() {
 
               <div className="flex items-center gap-2">
                 <User size={16} />
-                <span>
-                  Ingressos restantes - {event.capacity - selectedTickets}
-                </span>
+                <span>Ingressos restantes - {event.capacity}</span>
               </div>
             </div>
 
