@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { Save, ArrowLeft } from "lucide-react";
 import api from "../services/api";
+import toast from "react-hot-toast";
 
 export function EditEvent() {
   const { id } = useParams();
@@ -32,10 +33,10 @@ export function EditEvent() {
       await api.put(`/events/${id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("Evento atualizado!");
+      toast.success("Evento atualizado!");
       navigate("/dashboard");
     } catch (err) {
-      alert("Erro ao atualizar.");
+      toast.error("Erro ao atualizar.");
     }
   };
 

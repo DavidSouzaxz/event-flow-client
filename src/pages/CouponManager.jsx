@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 export function CouponManager() {
   const navigate = useNavigate();
@@ -42,10 +43,10 @@ export function CouponManager() {
       await api.delete(`/coupons/${couponId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("Cupom desativado com sucesso!");
+      toast.success("Cupom desativado com sucesso!");
       fetchCoupons();
     } catch (err) {
-      alert("Erro ao desativar cupom.");
+      toast.error("Erro ao desativar cupom.");
     }
   };
 
@@ -56,7 +57,7 @@ export function CouponManager() {
       await api.post(`/coupons`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("Cupom criado com sucesso!");
+      toast.success("Cupom criado com sucesso!");
       setFormData({
         code: "",
         discountPercent: "",
@@ -65,7 +66,7 @@ export function CouponManager() {
       });
       fetchCoupons();
     } catch (err) {
-      alert("Erro ao criar cupom.");
+      toast.error("Erro ao criar cupom.");
     } finally {
       setLoading(false);
     }

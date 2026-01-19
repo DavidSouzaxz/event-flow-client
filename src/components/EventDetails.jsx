@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { ChevronLeft, Calendar, MapPin, User, ShieldCheck } from "lucide-react";
 
 import api from "../services/api";
+import toast from "react-hot-toast";
 
 export function EventDetails() {
   const { id } = useParams();
@@ -27,12 +28,11 @@ export function EventDetails() {
     setCupomInvalid(false);
 
     try {
-      // Chamada para a rota de validação que criamos no passo anterior
       const res = await api.post("/coupons/validate", { code: discountCode });
 
       setDiscountPercent(res.data.discountPercent);
       setDiscountApplied(true);
-      alert(res.data.message); // "Cupom aplicado com sucesso!"
+      toast.success(res.data.message);
     } catch (err) {
       setCupomInvalid(true);
       setDiscountPercent(0);
@@ -61,7 +61,9 @@ export function EventDetails() {
     if (!signed) return navigate("/login");
 
     if (selectedTickets > event.capacity) {
-      return alert("Quantidade selecionada maior que ingressos disponíveis.");
+      return toast.error(
+        "Quantidade selecionada maior que ingressos disponíveis.",
+      );
     }
 
     try {
@@ -76,10 +78,10 @@ export function EventDetails() {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      alert("Ingressos garantidos! Veja em 'Meus Ingressos'.");
+      toast.success("Ingressos garantidos! Veja em 'Meus Ingressos'.");
       navigate("/my-tickets");
     } catch (err) {
-      alert("Erro ao reservar ingresso.");
+      toast.error("Erro ao reservar ingresso.");
     }
   };
 

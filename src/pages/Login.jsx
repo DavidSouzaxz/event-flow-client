@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import api from "../services/api";
+import toast from "react-hot-toast";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -26,10 +27,10 @@ export function Login() {
         setLoading(false);
         navigate("/");
       } else {
-        alert("Erro no login. Verifique suas credenciais.");
+        toast.error("Erro no login. Verifique suas credenciais.");
       }
     } catch (err) {
-      alert("Email ou senha incorretos.");
+      toast.error("Email ou senha incorretos.");
       setLoading(false);
     }
   };
