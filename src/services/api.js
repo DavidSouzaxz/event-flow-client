@@ -7,8 +7,13 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      localStorage.clear();
+    // Verificamos se o erro foi 401 E se não estamos na página de login
+    if (
+      error.response?.status === 401 &&
+      !window.location.pathname.includes("/")
+    ) {
+      localStorage.removeItem("@EventFlow:token");
+      localStorage.removeItem("@EventFlow:user");
       window.location.href = "/";
     }
     return Promise.reject(error);

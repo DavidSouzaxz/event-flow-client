@@ -17,20 +17,31 @@ export function AuthProvider({ children }) {
   }, [token]);
 
   useEffect(() => {
-    async function checkAuth() {
-      const token = localStorage.getItem("@EventFlow:token");
-      if (token) {
+    async function loadStorageData() {
+      const storageUser = localStorage.getItem("@EventFlow:user");
+      const storageToken = localStorage.getItem("@EventFlow:token");
+
+      if (storageUser && storageToken) {
+        // IMPORTANTE: Insira o token no cabeçalho manualmente para esta primeira validação
+        api.defaults.headers.Authorization = `Bearer ${storageToken}`;
+
         try {
           const response = await api.get("/me");
+
+          // Se a API confirmou, mantemos os dados
           setUser(response.data);
           setSigned(true);
-        } catch (err) {
-          logout();
+        } catch (error) {
+          // SÓ remove se o erro for realmente de autenticação (401)
+          if (error.response?.status === 401) {
+            logout();
+          }
         }
       }
       setLoading(false);
     }
-    checkAuth();
+
+    loadStorageData();
   }, []);
 
   useEffect(() => {
