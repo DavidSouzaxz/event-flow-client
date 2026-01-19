@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("@EventFlow:token"));
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storagedUser = localStorage.getItem("@EventFlow:user");
@@ -14,6 +15,23 @@ export function AuthProvider({ children }) {
       setUser(JSON.parse(storagedUser));
     }
   }, [token]);
+
+  useEffect(() => {
+    async function checkAuth() {
+      const token = localStorage.getItem("@EventFlow:token");
+      if (token) {
+        try {
+          const response = await api.get("/me");
+          setUser(response.data);
+          setSigned(true);
+        } catch (err) {
+          logout();
+        }
+      }
+      setLoading(false);
+    }
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -48,6 +66,11 @@ export function AuthProvider({ children }) {
     setToken(null);
     localStorage.removeItem("@EventFlow:token");
     localStorage.removeItem("@EventFlow:user");
+
+    setUser(null);
+    setToken(null);
+    setSigned(false);
+    setInfo(null);
   };
 
   return (
