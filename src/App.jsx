@@ -12,12 +12,24 @@ import { EditEvent } from "./pages/EditEvent";
 import { CouponManager } from "./pages/CouponManager";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./context/PrivateRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="min-h-screen bg-gray-50">
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
+              duration: 4000, // Todos os toasts ficarão visíveis por 4 segundos
+              style: {
+                background: "#333",
+                color: "#fff",
+              },
+            }}
+          />
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />

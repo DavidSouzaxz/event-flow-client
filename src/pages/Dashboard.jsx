@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
+import toast from "react-hot-toast";
 
 export function Dashboard() {
   const [myEvents, setMyEvents] = useState([]);
@@ -28,7 +29,7 @@ export function Dashboard() {
     api
       .get(`/my-events`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => setMyEvents(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => error(err))
       .finally(() => setLoading(false));
   };
 
@@ -42,7 +43,7 @@ export function Dashboard() {
         });
         fetchEvents();
       } catch (err) {
-        alert("Erro ao excluir.");
+        toast.error("Erro ao excluir.");
       }
     }
   };

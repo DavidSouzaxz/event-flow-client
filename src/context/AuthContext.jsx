@@ -7,6 +7,8 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("@EventFlow:token"));
+  const [loading, setLoading] = useState(true);
+  const [signed, setSigned] = useState(false);
 
   useEffect(() => {
     const storagedUser = localStorage.getItem("@EventFlow:user");
@@ -14,6 +16,34 @@ export function AuthProvider({ children }) {
       setUser(JSON.parse(storagedUser));
     }
   }, [token]);
+
+  useEffect(() => {
+    async function loadStorageData() {
+      const storageUser = localStorage.getItem("@EventFlow:user");
+      const storageToken = localStorage.getItem("@EventFlow:token");
+
+      if (storageUser && storageToken) {
+        // IMPORTANTE: Insira o token no cabeçalho manualmente para esta primeira validação
+        api.defaults.headers.Authorization = `Bearer ${storageToken}`;
+
+        try {
+          const response = await api.get("/me");
+
+          // Se a API confirmou, mantemos os dados
+          setUser(response.data);
+          setSigned(true);
+        } catch (error) {
+          // SÓ remove se o erro for realmente de autenticação (401)
+          if (error.response?.status === 401) {
+            logout();
+          }
+        }
+      }
+      setLoading(false);
+    }
+
+    loadStorageData();
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -48,6 +78,11 @@ export function AuthProvider({ children }) {
     setToken(null);
     localStorage.removeItem("@EventFlow:token");
     localStorage.removeItem("@EventFlow:user");
+
+    setUser(null);
+    setToken(null);
+    setSigned(false);
+    setInfo(null);
   };
 
   return (

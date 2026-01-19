@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { MapPin, Calendar, Search, ArrowRight, X } from "lucide-react";
+import { MapPin, Calendar, Search, ArrowRight, X, Loader2 } from "lucide-react";
 import api from "../services/api";
 
 export function Home() {
@@ -9,21 +9,17 @@ export function Home() {
   const [searchTerm, setSearchTerm] = useState(""); // Estado para o texto de busca
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [activeFilter, setActiveFilter] = useState("todos");
-
+  const [loading, setLoading] = useState(true);
   const [priceLimit, setPriceLimit] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     api
-      .get(`/events`)
-      .then((res) => {
-        setEvents(res.data);
-        setFilteredEvents(res.data);
-      })
-      .catch((err) => console.error("Erro ao buscar eventos", err));
+      .get("/events")
+      .then((res) => setEvents(res.data))
+      .finally(() => setLoading(false));
   }, []);
 
-  // Lógica de Filtro Instantâneo
   useEffect(() => {
     let results = events.filter((event) => {
       const matchesSearch =
@@ -37,10 +33,8 @@ export function Home() {
 
       let matchesDate = true;
       if (activeFilter === "data" && selectedDate) {
-        // Criamos o objeto de data garantindo que ele não sofra interferência do fuso horário local
         const dateObj = new Date(event.date);
 
-        // Formatamos para YYYY-MM-DD usando a data UTC para bater com o que vem do input
         const eventDateFormatted = dateObj.toISOString().split("T")[0];
 
         matchesDate = eventDateFormatted === selectedDate;
@@ -48,7 +42,6 @@ export function Home() {
       return matchesSearch && matchesPrice && matchesDate;
     });
 
-    // Mantém a ordenação por localização se o filtro for local
     if (activeFilter === "local") {
       results = [...results].sort((a, b) =>
         a.location.localeCompare(b.location),
@@ -162,76 +155,86 @@ export function Home() {
         </div>
       </div>
       {/* GRID DE EVENTOS FILTRADOS */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">
-            {searchTerm ? `Resultados para: ${searchTerm}` : "Próximos Eventos"}
-          </h2>
-          <span className="text-gray-400 font-bold">
-            {filteredEvents.length} eventos encontrados
-          </span>
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <p className="text-gray-500 font-medium italic">
+            Carregando eventos...
+          </p>
+          <Loader2 className="animate-spin text-gray-400" size={25} />
         </div>
+      ) : (
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="flex items-center justify-between mb-12">
+            <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">
+              {searchTerm
+                ? `Resultados para: ${searchTerm}`
+                : "Próximos Eventos"}
+            </h2>
+            <span className="text-gray-400 font-bold">
+              {filteredEvents.length} eventos encontrados
+            </span>
+          </div>
 
-        {filteredEvents.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredEvents.map((event) => (
-              <div
-                key={event.id}
-                className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col"
-              >
-                <div className="relative h-60 overflow-hidden">
-                  <img
-                    src={event.imageUrl}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute top-5 left-5">
-                    <span className="bg-white text-gray-900 px-4 py-1.5 rounded-full text-[10px] font-black uppercase shadow-lg">
-                      {event.price === 0 ? "Grátis" : "Premium"}
-                    </span>
+          {filteredEvents.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+              {filteredEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col"
+                >
+                  <div className="relative h-60 overflow-hidden">
+                    <img
+                      src={event.imageUrl}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute top-5 left-5">
+                      <span className="bg-white text-gray-900 px-4 py-1.5 rounded-full text-[10px] font-black uppercase shadow-lg">
+                        {event.price === 0 ? "Grátis" : "Premium"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
+                      {event.title}
+                    </h3>
+                    <div className="flex flex-col gap-2 text-gray-500 text-sm mb-8 font-medium">
+                      <p className="flex items-center gap-2">
+                        <Calendar size={16} className="text-indigo-600" />{" "}
+                        {new Date(event.date).toLocaleDateString()}
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <MapPin size={16} className="text-indigo-600" />{" "}
+                        {event.location}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-6 border-t border-gray-50">
+                      <span className="text-2xl font-bold text-gray-900 tracking-tighter">
+                        {event.price === 0
+                          ? "Grátis"
+                          : currencyFormatter.format(event.price)}
+                      </span>
+                      <Link
+                        to={`/event/${event.id}`}
+                        className="bg-gray-900 text-white p-4 rounded-2xl hover:bg-indigo-600 transition-all shadow-lg active:scale-90"
+                      >
+                        <ArrowRight size={20} />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
-                    {event.title}
-                  </h3>
-                  <div className="flex flex-col gap-2 text-gray-500 text-sm mb-8 font-medium">
-                    <p className="flex items-center gap-2">
-                      <Calendar size={16} className="text-indigo-600" />{" "}
-                      {new Date(event.date).toLocaleDateString()}
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <MapPin size={16} className="text-indigo-600" />{" "}
-                      {event.location}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-6 border-t border-gray-50">
-                    <span className="text-2xl font-bold text-gray-900 tracking-tighter">
-                      {event.price === 0
-                        ? "Grátis"
-                        : currencyFormatter.format(event.price)}
-                    </span>
-                    <Link
-                      to={`/event/${event.id}`}
-                      className="bg-gray-900 text-white p-4 rounded-2xl hover:bg-indigo-600 transition-all shadow-lg active:scale-90"
-                    >
-                      <ArrowRight size={20} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
-            <p className="text-xl text-gray-400 font-bold">
-              Nenhum evento encontrado.
-            </p>
-          </div>
-        )}
-      </div>
-
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
+              <p className="text-xl text-gray-400 font-bold">
+                Nenhum evento encontrado.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
       <div className="flex flex-col items-center justify-center gap-3 text-center py-10 text-gray-400 font-bold">
         <p>Todos os direitos Reservados para DavidSouzaxz © 2026</p>
         <div className="flex gap-5">

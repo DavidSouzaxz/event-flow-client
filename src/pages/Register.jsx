@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 export function Register() {
   const [formData, setFormData] = useState({
@@ -18,11 +19,11 @@ export function Register() {
     e.preventDefault();
     try {
       const response = await api.post(`/register`, formData);
-      alert(`Bem-vindo, ${response.data.name}! Conta criada.`);
+      toast.success(`Bem-vindo, ${response.data.name}! Conta criada.`);
       navigate("/login");
       setLoading(false);
     } catch (err) {
-      alert("Erro ao cadastrar.");
+      toast.error("Erro ao cadastrar.");
       setLoading(false);
     }
   };

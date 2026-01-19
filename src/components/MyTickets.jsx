@@ -21,7 +21,6 @@ export function MyTickets() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Erro ao carregar ingressos", err);
         setLoading(false);
       });
   }, [token]);

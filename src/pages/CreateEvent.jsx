@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { ImagePlus, MapPin, Calendar, DollarSign } from "lucide-react";
 import { Save, ArrowLeft } from "lucide-react";
 import api from "../services/api";
+import toast from "react-hot-toast";
 
 export function CreateEvent() {
   const { token } = useAuth();
@@ -24,11 +25,11 @@ export function CreateEvent() {
       await api.post(`/events`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("Evento criado com sucesso!");
+      toast.success("Evento criado com sucesso!");
       navigate("/");
     } catch (err) {
-      alert(
-        "Erro ao criar evento. Verifique se todos os campos estão preenchidos."
+      toast.error(
+        "Erro ao criar evento. Verifique se todos os campos estão preenchidos.",
       );
     }
   };
@@ -77,9 +78,11 @@ export function CreateEvent() {
               }
             />
           </div>
-          
+
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Capacidade Total</label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Capacidade Total
+            </label>
             <input
               type="number"
               className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
