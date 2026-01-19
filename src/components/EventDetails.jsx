@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { ChevronLeft, Calendar, MapPin, User, ShieldCheck } from "lucide-react";
 
 import api from "../services/api";
 
