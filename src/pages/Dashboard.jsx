@@ -14,6 +14,15 @@ import {
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import toast from "react-hot-toast";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from "recharts";
 
 export function Dashboard() {
   const [myEvents, setMyEvents] = useState([]);
@@ -53,6 +62,36 @@ export function Dashboard() {
     0,
   );
 
+  const chartData = myEvents
+    .reduce((acc, event) => {
+      // Percorre os tickets de cada evento retornado
+      (event.tickets || []).forEach((ticket) => {
+        const date = new Date(ticket.createdAt).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+        });
+
+        const existingDate = acc.find((item) => item.date === date);
+
+        if (existingDate) {
+          // Se o dia já existe (ex: 19/01), soma mais uma venda
+          existingDate.vendas += 1;
+        } else {
+          // Se é um dia novo (ex: 18/01), cria a entrada no array
+          acc.push({ date, vendas: 1 });
+        }
+      });
+      return acc;
+    }, [])
+    .sort((a, b) => {
+      // Ordenação correta para garantir que 18/01 venha antes de 19/01
+      const [dayA, monthA] = a.date.split("/").map(Number);
+      const [dayB, monthB] = b.date.split("/").map(Number);
+      return (
+        new Date(2026, monthA - 1, dayA) - new Date(2026, monthB - 1, dayB)
+      );
+    });
+
   if (loading)
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
@@ -86,6 +125,52 @@ export function Dashboard() {
           >
             <Ticket size={20} /> GERAR CUPOM
           </Link>
+        </div>
+      </div>
+      <div className="bg-white p-6 md:p-10 rounded-[2.5rem] border border-gray-100 shadow-sm mb-12">
+        <div className="mb-8">
+          <h2 className="text-xl font-black text-gray-900 uppercase tracking-tighter">
+            Desempenho de Vendas
+          </h2>
+          <p className="text-sm text-gray-400 font-medium">
+            Volume de ingressos emitidos por dia
+          </p>
+        </div>
+
+        <div className="h-[300px] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData}>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="#f0f0f0"
+              />
+              <XAxis
+                dataKey="date"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: "#9ca3af", fontSize: 12, fontWeight: "bold" }}
+                dy={10}
+              />
+              <YAxis hide />
+              <Tooltip
+                contentStyle={{
+                  borderRadius: "16px",
+                  border: "none",
+                  boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+                }}
+                itemStyle={{ color: "#4f46e5", fontWeight: "bold" }}
+              />
+              <Line
+                type="monotone"
+                dataKey="vendas"
+                stroke="#4f46e5"
+                strokeWidth={4}
+                dot={{ r: 6, fill: "#4f46e5", strokeWidth: 2, stroke: "#fff" }}
+                activeDot={{ r: 8 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
