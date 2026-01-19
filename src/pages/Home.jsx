@@ -235,7 +235,7 @@ export function Home() {
           )}
         </div>
       )}
-      <div className="flex flex-col items-center justify-center gap-3 text-center py-10 text-gray-400 font-bold">
+      {/* <div className="flex flex-col items-center justify-center gap-3 text-center py-10 text-gray-400 font-bold">
         <p>Todos os direitos Reservados para DavidSouzaxz © 2026</p>
         <div className="flex gap-5">
           <a
@@ -261,7 +261,7 @@ export function Home() {
             </svg>
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

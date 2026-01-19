@@ -13,6 +13,7 @@ import { CouponManager } from "./pages/CouponManager";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./context/PrivateRoute";
 import { Toaster } from "react-hot-toast";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
               }
             />
           </Routes>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
