@@ -9,6 +9,7 @@ import { MyTickets } from "./pages/MyTickets";
 import { CreateEvent } from "./pages/CreateEvent";
 import { Dashboard } from "./pages/Dashboard";
 import { EditEvent } from "./pages/EditEvent";
+import { CouponManager } from "./pages/CouponManager";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./context/PrivateRoute";
 
@@ -48,6 +49,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <EditEvent />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/coupons-manager"
+              element={
+                <PrivateRoute>
+                  <CouponManager />
                 </PrivateRoute>
               }
             />

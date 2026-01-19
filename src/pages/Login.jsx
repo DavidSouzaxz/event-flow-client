@@ -2,15 +2,18 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 import api from "../services/api";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
-  const navigate = useNavigate(); // Adicionando o useNavigate
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const res = await api.post(`/login`, {
@@ -18,19 +21,17 @@ export function Login() {
         password,
       });
 
-      console.log("Resposta da API:", res.data); // Log para depuração
-
       if (res.status === 200) {
-        // Verifica se o status é 200
         login(res.data.user, res.data.token);
-        // alert("Login realizado com sucesso!");
-        navigate("/"); // Redireciona para a home
+        setLoading(false);
+        navigate("/");
       } else {
         alert("Erro no login. Verifique suas credenciais.");
       }
     } catch (err) {
-      console.error("Erro no login:", err); // Log do erro para depuração
+      console.error("Erro no login:", err);
       alert("Email ou senha incorretos.");
+      setLoading(false);
     }
   };
 
@@ -55,8 +56,12 @@ export function Login() {
           className="w-full p-3 mb-6 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:bg-indigo-700 transition duration-300">
-          Entrar
+        <button className="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:bg-indigo-700 transition duration-300 flex items-center justify-center hover:cursor-pointer">
+          {loading ? (
+            <Loader2 className="animate-spin text-white" size={25} />
+          ) : (
+            "Entrar"
+          )}
         </button>
       </form>
     </div>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   Ticket,
@@ -13,8 +13,14 @@ import { useState } from "react";
 export function Navbar() {
   const { user, logout, signed, info } = useAuth();
   const [isOpen, setIsOpen] = useState(false); // Estado para controlar o menu mobile
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
@@ -52,7 +58,7 @@ export function Navbar() {
                     Olá, {user?.name.split(" ")[0]}
                   </span>
                   <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className="text-gray-400 hover:text-red-500 transition"
                   >
                     <LogOut size={20} />
@@ -116,7 +122,7 @@ export function Navbar() {
               )}
               <button
                 onClick={() => {
-                  logout();
+                  handleLogout();
                   toggleMenu();
                 }}
                 className="w-full flex items-center gap-3 p-3 text-red-500 font-bold hover:bg-red-50 rounded-xl mt-4"
