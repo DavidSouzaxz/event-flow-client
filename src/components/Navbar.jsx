@@ -54,9 +54,11 @@ export function Navbar() {
                   </Link>
                 )}
                 <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-                  <span className="text-sm font-bold text-gray-800">
-                    Olá, {user?.name.split(" ")[0]}
-                  </span>
+                  <Link to="/profile" className="flex items-center gap-2 hover:underline">
+                    <span className="text-sm font-bold text-gray-800">
+                      Olá, {user?.name.split(" ")[0]}
+                    </span>
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="text-gray-400 hover:text-red-500 transition"

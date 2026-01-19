@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import PrivateRoute from "./context/PrivateRoute";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "./components/Footer";
+import { Profile } from "./pages/Profile";
 
 function App() {
   return (
@@ -53,6 +54,15 @@ function App() {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
                 </PrivateRoute>
               }
             />
