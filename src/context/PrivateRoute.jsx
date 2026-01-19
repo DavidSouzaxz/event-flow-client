@@ -11,7 +11,6 @@ function PrivateRoute({ children }) {
   }
 
   if (children.props.path === "/dashboard" || info.role !== "ADMIN") {
-    console.log(info.role);
     return <Navigate to="/not-found" replace />;
   }
 

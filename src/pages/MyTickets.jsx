@@ -16,8 +16,8 @@ export function MyTickets() {
       .then((res) => {
         setTickets(res.data);
       })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false)); // Desliga o loading independente do resultado
+      .catch((err) => error(err))
+      .finally(() => setLoading(false));
   }, []);
 
   // Spinner de carregamento

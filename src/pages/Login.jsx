@@ -29,7 +29,6 @@ export function Login() {
         alert("Erro no login. Verifique suas credenciais.");
       }
     } catch (err) {
-      console.error("Erro no login:", err);
       alert("Email ou senha incorretos.");
       setLoading(false);
     }

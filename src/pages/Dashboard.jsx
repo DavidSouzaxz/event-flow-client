@@ -28,7 +28,7 @@ export function Dashboard() {
     api
       .get(`/my-events`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => setMyEvents(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => error(err))
       .finally(() => setLoading(false));
   };
 
