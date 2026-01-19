@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { Loader2 } from "lucide-react";
 
 export function Register() {
   const [formData, setFormData] = useState({
@@ -9,16 +10,20 @@ export function Register() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await api.post(`/register`, formData);
       alert(`Bem-vindo, ${response.data.name}! Conta criada.`);
       navigate("/login");
+      setLoading(false);
     } catch (err) {
-      alert("Erro ao cadastrar. Tente outro e-mail.");
+      alert("Erro ao cadastrar.");
+      setLoading(false);
     }
   };
 
@@ -47,8 +52,12 @@ export function Register() {
             setFormData({ ...formData, password: e.target.value })
           }
         />
-        <button className="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:bg-indigo-700 transition">
-          Cadastrar
+        <button className="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:bg-indigo-700 transition duration-300 flex items-center justify-center hover:cursor-pointer">
+          {loading ? (
+            <Loader2 className="animate-spin text-white" size={25} />
+          ) : (
+            "Cadastrar"
+          )}
         </button>
       </form>
     </div>
