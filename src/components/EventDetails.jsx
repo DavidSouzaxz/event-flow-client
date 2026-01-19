@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-import { Calendar, MapPin, User, ChevronLeft, ShieldCheck } from "lucide-react";
+
 import api from "../services/api";
 
 export function EventDetails() {
@@ -11,10 +12,49 @@ export function EventDetails() {
   const { token, signed } = useAuth();
   const [event, setEvent] = useState(null);
   const [selectedTickets, setSelectedTickets] = useState(1);
+  const [discountCode, setDiscountCode] = useState("");
+
+  const [discountPercent, setDiscountPercent] = useState(0);
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [cupomInvalid, setCupomInvalid] = useState(false);
+  const [validatingCupom, setValidatingCupom] = useState(false);
+
+  const handleApplyDiscount = async () => {
+    if (discountApplied || !discountCode.trim()) return;
+
+    setValidatingCupom(true);
+    setCupomInvalid(false);
+
+    try {
+      // Chamada para a rota de validação que criamos no passo anterior
+      const res = await api.post("/coupons/validate", { code: discountCode });
+
+      setDiscountPercent(res.data.discountPercent);
+      setDiscountApplied(true);
+      alert(res.data.message); // "Cupom aplicado com sucesso!"
+    } catch (err) {
+      setCupomInvalid(true);
+      setDiscountPercent(0);
+      setDiscountApplied(false);
+    } finally {
+      setValidatingCupom(false);
+    }
+  };
+
+  const removeDiscount = () => {
+    setDiscountPercent(0);
+    setDiscountApplied(false);
+    setDiscountCode("");
+    setCupomInvalid(false);
+  };
 
   useEffect(() => {
     api.get(`/events/${id}`).then((res) => setEvent(res.data));
   }, [id]);
+
+  const subtotal = event ? event.price * selectedTickets : 0;
+  const discountAmount = (subtotal * discountPercent) / 100;
+  const totalWithDiscount = subtotal - discountAmount;
 
   const handleBooking = async () => {
     if (!signed) return navigate("/login");
@@ -26,12 +66,16 @@ export function EventDetails() {
     try {
       await api.post(
         `/bookings`,
-        { eventId: id, quantity: selectedTickets },
+        {
+          eventId: id,
+          quantity: selectedTickets,
+          couponCode: discountApplied ? discountCode : null,
+        },
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      alert("Ingresso(s) garantido(s)! Veja em 'Meus Ingressos'.");
+      alert("Ingressos garantidos! Veja em 'Meus Ingressos'.");
       navigate("/my-tickets");
     } catch (err) {
       alert("Erro ao reservar ingresso.");
@@ -141,11 +185,75 @@ export function EventDetails() {
               </div>
             </div>
 
+            <div className="w-full mt-6 pt-6 border-t border-gray-50 flex flex-col   text-gray-900 font-medium text-lg">
+              <div className="flex flex-col items-end">
+                <p className="text-sm font-light">
+                  {selectedTickets} Ticket{selectedTickets > 1 ? "s" : ""} x{" "}
+                  {currencyFormatter.format(event.price)}
+                </p>
+                {discountApplied && (
+                  <p className="text-sm font-light text-green-600">
+                    Desconto {discountPercent}% aplicado (-
+                    {currencyFormatter.format(discountAmount)})
+                  </p>
+                )}
+              </div>
+              <div className="gap-2 flex justify-end">
+                <span>Total: </span>
+                <span className="text-1xl text-green-600">
+                  {event.price === 0
+                    ? "Gratuito"
+                    : currencyFormatter.format(totalWithDiscount)}
+                </span>
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <input
+                  type="text"
+                  placeholder="CUPOM"
+                  className={`w-40 p-3 bg-gray-50 rounded-xl outline-none border-2 transition-all ${
+                    cupomInvalid
+                      ? "border-red-200 focus:border-red-400"
+                      : "border-transparent focus:border-indigo-500"
+                  } font-bold uppercase text-sm`}
+                  value={discountCode}
+                  onChange={(e) =>
+                    setDiscountCode(e.target.value.toUpperCase())
+                  }
+                  disabled={discountApplied || validatingCupom}
+                />
+                <button
+                  type="button"
+                  onClick={
+                    discountApplied ? removeDiscount : handleApplyDiscount
+                  }
+                  disabled={validatingCupom}
+                  className={`p-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all hover:cursor-pointer ${
+                    discountApplied
+                      ? "bg-red-50 text-red-500 hover:bg-red-100"
+                      : "bg-gray-900 text-white hover:bg-indigo-600"
+                  }`}
+                >
+                  {validatingCupom ? (
+                    <Loader2 className="animate-spin" size={16} />
+                  ) : discountApplied ? (
+                    "Remover"
+                  ) : (
+                    "Aplicar"
+                  )}
+                </button>
+              </div>
+              {cupomInvalid && (
+                <span className="text-[10px] mt-2 ml-2 text-red-500 font-black uppercase tracking-tighter">
+                  Cupom inexistente ou expirado
+                </span>
+              )}
+            </div>
+
             <button
               onClick={handleBooking}
-              className="w-full mt-8 bg-gray-900 text-white py-5 rounded-2xl font-black text-lg hover:bg-indigo-600 transition-all duration-300 transform active:scale-95 shadow-xl shadow-gray-200"
+              className="w-full mt-8 bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 transition-all shadow-xl shadow-indigo-100"
             >
-              {`Reservar ${selectedTickets} ingresso${selectedTickets > 1 ? "s" : ""}`}
+              Finalizar Reserva
             </button>
 
             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium">

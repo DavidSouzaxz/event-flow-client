@@ -9,6 +9,7 @@ import {
   Plus,
   Loader2,
   Calendar,
+  Ticket,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
@@ -71,12 +72,20 @@ export function Dashboard() {
             Gerencie suas produções e acompanhe as vendas.
           </p>
         </div>
-        <Link
-          to="/create-event"
-          className="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-indigo-100"
-        >
-          <Plus size={20} /> NOVO EVENTO
-        </Link>
+        <div className="flex flex-col gap-4">
+          <Link
+            to="/create-event"
+            className="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-indigo-100"
+          >
+            <Plus size={20} /> NOVO EVENTO
+          </Link>
+          <Link
+            to="/coupons-manager"
+            className="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-indigo-100"
+          >
+            <Ticket size={20} /> GERAR CUPOM
+          </Link>
+        </div>
       </div>
 
       {/* STATS */}
