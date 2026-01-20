@@ -18,6 +18,7 @@ import { Profile } from "./pages/Profile";
 import { AnimatePresence } from "framer-motion";
 import { VerifyEmail } from "./pages/VerifyEmail";
 import { SendVerifyEmail } from "./pages/SendVerifyEmail";
+import { AdminTickets } from "./pages/AdminTickets";
 
 function App() {
   return (
@@ -77,6 +78,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <CouponManager />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/admin-tickets"
+                element={
+                  <PrivateRoute>
+                    <AdminTickets />
                   </PrivateRoute>
                 }
               />
