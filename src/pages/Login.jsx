@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import api from "../services/api";
 import toast from "react-hot-toast";
@@ -65,6 +65,21 @@ export function Login() {
             "Entrar"
           )}
         </button>
+
+        <div className="mt-6 text-center space-y-2">
+          <Link
+            to="/register"
+            className="block text-sm text-gray-500 hover:text-indigo-600"
+          >
+            Não tem uma conta? Registre-se
+          </Link>
+          <Link
+            to="/send-verify-email"
+            className="block text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+          >
+            Reenviar e-mail de verificação
+          </Link>
+        </div>
       </form>
     </div>
   );
