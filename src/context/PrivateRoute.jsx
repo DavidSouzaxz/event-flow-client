@@ -1,24 +1,27 @@
 import { Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
-import api from "../services/api";
+import { Loader2 } from "lucide-react";
 
-function PrivateRoute({ children }) {
-  const { signed, user, info } = useAuth();
+export default function PrivateRoute({ children }) {
+  const { signed, loading, user } = useAuth();
 
-  if (info === null) {
-    return <div>Carregando...</div>;
+  // 1. Loading inicial do sistema
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        Carregando...
+        <Loader2 className="ml-2 h-6 w-6 animate-spin" />
+      </div>
+    );
   }
 
-  if (children.props.path === "/dashboard" || info.role !== "ADMIN") {
-    return <Navigate to="/not-found" replace />;
-  }
-
-  if (!signed) {
+  if (!signed && !hasToken) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (user?.role !== "ADMIN") {
+    return <Navigate to="/not-found" replace />;
   }
 
   return children;
 }
-
-export default PrivateRoute;
