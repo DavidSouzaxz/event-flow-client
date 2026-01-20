@@ -14,11 +14,12 @@ import NotFound from "./pages/NotFound";
 import PrivateRoute from "./context/PrivateRoute";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "./components/Footer";
+import { Profile } from "./pages/Profile";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <div className="min-h-screen bg-gray-50">
           <Toaster
             position="top-center"
@@ -57,6 +58,8 @@ function App() {
               }
             />
 
+            <Route path="/profile" element={<Profile />} />
+
             <Route
               path="/edit-event/:id"
               element={
@@ -76,8 +79,8 @@ function App() {
           </Routes>
           <Footer />
         </div>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

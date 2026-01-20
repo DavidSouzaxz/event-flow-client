@@ -7,18 +7,7 @@ import { useAuth } from "../context/AuthContext";
 
 export function Footer() {
   const [signedOut, setSignedOut] = useState(true);
-  const { token } = useAuth();
-
-  useEffect(() => {
-    api
-      .get("/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => setSignedOut(false))
-      .catch(() => setSignedOut(true));
-  }, []);
+  const { token, signed } = useAuth();
 
   return (
     <footer className="bg-white border-t border-gray-100 pt-16 pb-8">
@@ -58,7 +47,7 @@ export function Footer() {
                   Meus Ingressos
                 </Link>
               </li>
-              {signedOut && (
+              {!signed && (
                 <li>
                   <Link
                     to="/login"

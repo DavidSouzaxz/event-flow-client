@@ -11,8 +11,8 @@ import {
 import { useState } from "react";
 
 export function Navbar() {
-  const { user, logout, signed, info } = useAuth();
-  const [isOpen, setIsOpen] = useState(false); // Estado para controlar o menu mobile
+  const { user, logout, signed } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -45,7 +45,7 @@ export function Navbar() {
                 >
                   <Ticket size={18} /> Meus Ingressos
                 </Link>
-                {info?.role === "ADMIN" && (
+                {user?.role === "ADMIN" && (
                   <Link
                     to="/dashboard"
                     className="text-gray-600 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
@@ -53,15 +53,28 @@ export function Navbar() {
                     <LayoutDashboard size={18} /> Painel
                   </Link>
                 )}
-                <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-                  <span className="text-sm font-bold text-gray-800">
-                    Olá, {user?.name.split(" ")[0]}
-                  </span>
+                <div className="flex items-center gap-5 pl-4 border-l border-gray-200">
+                  {/* Imagem de Perfil Dinâmica */}
+                  <div className="flex hover:cursor-pointer hover:scale-105 transition-transform">
+                    <Link to="/profile" className="flex items-center">
+                      <img
+                        src={
+                          user?.avatarUrl ||
+                          `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`
+                        }
+                        alt="Avatar"
+                        className="w-10 h-10 rounded-full border-2 border-indigo-50 shadow-sm object-cover group-hover:border-indigo-500 transition-all "
+                      />
+                      <span className="text-sm font-bold text-gray-800">
+                        Olá, {user?.name.split(" ")[0]}
+                      </span>
+                    </Link>
+                  </div>
                   <button
                     onClick={handleLogout}
-                    className="text-gray-400 hover:text-red-500 transition"
+                    className="text-gray-400 hover:text-red-500 transition hover:cursor-pointer"
                   >
-                    <LogOut size={20} />
+                    <LogOut size={15} />
                   </button>
                 </div>
               </>
@@ -97,12 +110,31 @@ export function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-2 shadow-lg animate-in slide-in-from-top duration-300">
           {signed ? (
             <>
-              <div className="py-3 border-b border-gray-50 mb-2">
+              <Link
+                to="/profile"
+                onClick={toggleMenu}
+                className="flex items-center gap-4 py-4 border-b border-gray-50 mb-2 hover:bg-gray-50 rounded-xl px-2 transition-colors"
+              >
+                <img
+                  src={user?.avatarUrl}
+                  alt="Avatar"
+                  className="w-12 h-12 rounded-full border-2 border-indigo-500 object-cover"
+                />
+                <div>
+                  <p className="text-xs text-gray-400 uppercase font-black tracking-widest">
+                    Meu Perfil
+                  </p>
+                  <p className="text-gray-900 font-bold text-lg">
+                    {user?.name}
+                  </p>
+                </div>
+              </Link>
+              {/* <div className="py-3 border-b border-gray-50 mb-2">
                 <p className="text-xs text-gray-400 uppercase font-black">
                   Utilizador
                 </p>
                 <p className="text-gray-900 font-bold">{user?.name}</p>
-              </div>
+              </div> */}
               <Link
                 to="/my-tickets"
                 onClick={toggleMenu}
@@ -110,7 +142,7 @@ export function Navbar() {
               >
                 <Ticket size={20} className="text-indigo-600" /> Meus Ingressos
               </Link>
-              {info?.role === "ADMIN" && (
+              {user?.role === "ADMIN" && (
                 <Link
                   to="/dashboard"
                   onClick={toggleMenu}

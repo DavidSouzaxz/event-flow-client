@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
@@ -22,9 +21,12 @@ export function Login() {
         password,
       });
 
+      const { user, token } = res.data;
+
       if (res.status === 200) {
-        login(res.data.user, res.data.token);
+        login(user, token);
         setLoading(false);
+        toast.success("Login realizado com sucesso!");
         navigate("/");
       } else {
         toast.error("Erro no login. Verifique suas credenciais.");
