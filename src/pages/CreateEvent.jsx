@@ -98,6 +98,8 @@ export function CreateEvent() {
             </label>
             <input
               type="number"
+              step="0.01"
+              min="0"
               className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="0.00"
               onChange={(e) =>
