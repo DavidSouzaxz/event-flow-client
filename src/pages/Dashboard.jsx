@@ -175,18 +175,22 @@ export function Dashboard() {
       </div>
 
       {/* STATS */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-        <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
-          <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">
+      <div className="md:flex md:w-5/10 grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+        <div className="md:w-5/10 bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+          <p className="md:text-[12px] text-gray-400 font-bold text-[10px] uppercase tracking-widest">
             Eventos
           </p>
-          <p className="text-2xl font-black text-gray-900">{myEvents.length}</p>
+          <p className="md:text-4xl text-2xl font-black text-gray-900">
+            {myEvents.length}
+          </p>
         </div>
-        <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
-          <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">
+        <div className="md:w-5/10 bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+          <p className="md:text-[12px] text-gray-400 font-bold text-[10px] uppercase tracking-widest">
             Vendas
           </p>
-          <p className="text-2xl font-black text-emerald-500">{totalSold}</p>
+          <p className="md:text-4xl text-2xl font-black text-emerald-500">
+            {totalSold}
+          </p>
         </div>
       </div>
 
