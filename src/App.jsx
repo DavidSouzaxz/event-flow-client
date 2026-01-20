@@ -15,6 +15,9 @@ import PrivateRoute from "./context/PrivateRoute";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "./components/Footer";
 import { Profile } from "./pages/Profile";
+import { AnimatePresence } from "framer-motion";
+import { VerifyEmail } from "./pages/VerifyEmail";
+import { SendVerifyEmail } from "./pages/SendVerifyEmail";
 
 function App() {
   return (
@@ -33,50 +36,55 @@ function App() {
             }}
           />
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/my-tickets" element={<MyTickets />} />
-            <Route path="/event/:id" element={<EventDetails />} />
-            <Route path="/not-found" element={<NotFound />} />
-            <Route
-              path="/create-event"
-              element={
-                <PrivateRoute>
-                  <CreateEvent />
-                </PrivateRoute>
-              }
-            />
+          <AnimatePresence mode="wait">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/my-tickets" element={<MyTickets />} />
+              <Route path="/event/:id" element={<EventDetails />} />
+              <Route path="/not-found" element={<NotFound />} />
+              <Route
+                path="/create-event"
+                element={
+                  <PrivateRoute>
+                    <CreateEvent />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<Profile />} />
 
-            <Route
-              path="/edit-event/:id"
-              element={
-                <PrivateRoute>
-                  <EditEvent />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/coupons-manager"
-              element={
-                <PrivateRoute>
-                  <CouponManager />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
+              <Route
+                path="/edit-event/:id"
+                element={
+                  <PrivateRoute>
+                    <EditEvent />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/coupons-manager"
+                element={
+                  <PrivateRoute>
+                    <CouponManager />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/send-verify-email" element={<SendVerifyEmail />} />
+            </Routes>
+          </AnimatePresence>
           <Footer />
         </div>
       </AuthProvider>
