@@ -29,7 +29,7 @@ function App() {
             position="top-center"
             reverseOrder={false}
             toastOptions={{
-              duration: 4000, // Todos os toasts ficarão visíveis por 4 segundos
+              duration: 2000, // Todos os toasts ficarão visíveis por 4 segundos
               style: {
                 background: "#333",
                 color: "#fff",
