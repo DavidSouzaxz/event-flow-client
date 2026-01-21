@@ -15,9 +15,9 @@ export function AdminTickets() {
     setTickets(response.data);
   };
 
-  const handleAction = async (ticketId, status) => {
+  const handleAction = async (ticketId) => {
     try {
-      await api.patch(`/tickets/${ticketId}/status`, { newStatus: status });
+      await api.post(`/tickets/check-in`, { ticketId });
 
       toast.success("Ação realizada com sucesso!");
       // Remove da lista local após ação
@@ -66,13 +66,13 @@ export function AdminTickets() {
               </div>
               <div className="flex md:flex-row gap-2">
                 <button
-                  onClick={() => handleAction(ticket.id, 3)}
+                  onClick={() => handleAction(ticket.id)}
                   className="bg-green-500 text-white px-4 py-2 rounded hover:cursor-pointer hover:scale-105 hover:bg-green-600 transition-transform"
                 >
                   Aprovar
                 </button>
                 <button
-                  onClick={() => handleAction(ticket.id, 4)}
+                  onClick={() => handleAction(ticket.id)}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:cursor-pointer hover:scale-105 hover:bg-red-600 transition-transform"
                 >
                   Recusar

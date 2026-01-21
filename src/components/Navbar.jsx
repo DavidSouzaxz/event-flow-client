@@ -59,7 +59,7 @@ export function Navbar() {
                     to="/admin-tickets"
                     className="text-gray-600 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
                   >
-                    <Check size={18} /> Aprovações
+                    <Check size={18} /> Check-ins
                   </Link>
                 )}
                 <div className="flex items-center gap-5 pl-4 border-l border-gray-200">
@@ -167,7 +167,7 @@ export function Navbar() {
                   onClick={toggleMenu}
                   className="flex items-center gap-3 p-3 text-gray-600 font-bold hover:bg-indigo-50 rounded-xl"
                 >
-                  <Check size={20} className="text-indigo-600" /> Aprovações
+                  <Check size={20} className="text-indigo-600" /> Check-ins
                 </Link>
               )}
               <button
