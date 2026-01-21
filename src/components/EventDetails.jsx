@@ -130,9 +130,9 @@ export function EventDetails() {
 
   if (!event)
     return (
-      <div className="p-20 text-center animate-pulse">
+      <div className="flex justify-center items-center gap-2 p-20 text-center animate-pulse">
         Carregando...
-        <Loader2 className="animate-spin text-gray-400" size={25} />
+        <Loader2 className="animate-spin text-indigo-600" size={25} />
       </div>
     );
 
