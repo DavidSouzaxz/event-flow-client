@@ -7,7 +7,6 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Verificamos se o erro foi 401 E se não estamos na página de login
     if (
       error.response?.status === 401 &&
       !window.location.pathname.includes("/")
