@@ -97,7 +97,7 @@ export function EditEvent() {
           />
 
           <div className="md:grid md:grid-cols-2 gap-7">
-            <div>
+            <div className="mb-4">
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Data
               </label>
@@ -112,7 +112,7 @@ export function EditEvent() {
               />
             </div>
 
-            <div>
+            <div className="mb-4">
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Capacidade Total
               </label>
@@ -127,7 +127,7 @@ export function EditEvent() {
                 }
               />
             </div>
-            <div>
+            <div className="mb-4">
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Preço (R$)
               </label>
@@ -144,7 +144,7 @@ export function EditEvent() {
                 }
               />
             </div>
-            <div>
+            <div className="mb-4">
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Limite de Tickets por Pessoa
               </label>
@@ -166,7 +166,7 @@ export function EditEvent() {
             </div>
           </div>
 
-          <div>
+          <div className="mb-4">
             <label className="block text-sm font-bold text-gray-700 mb-2">
               Imagem de Capa
             </label>
@@ -196,6 +196,19 @@ export function EditEvent() {
                 onChange={handleFileChange}
               />
             </div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Localização
+            </label>
+            <input
+              required
+              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Ex: São Paulo, SP"
+              onChange={(e) =>
+                setFormData({ ...formData, location: e.target.value })
+              }
+            />
           </div>
 
           <label className="block text-sm font-bold text-gray-700 mb-2">
