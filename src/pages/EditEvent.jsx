@@ -96,7 +96,7 @@ export function EditEvent() {
             }
           />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="md:grid md:grid-cols-2 gap-7">
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">
                 Data
