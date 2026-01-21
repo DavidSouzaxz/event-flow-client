@@ -90,8 +90,26 @@ export function MyTickets() {
                       {ticket.quantity}{" "}
                       {ticket.quantity > 1 ? "Entradas" : "Entrada"}
                     </div>
-                    <div className="bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider">
-                      Confirmado
+                    <div
+                      className={`px-4 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider ${
+                        ticket.status === 3 || ticket.status === 5
+                          ? "bg-emerald-100 text-emerald-700"
+                          : ticket.status === 4
+                            ? "bg-red-100 text-red-700"
+                            : ticket.status === 2
+                              ? "bg-orange-100 text-orange-700"
+                              : "bg-blue-300 text-gray-500"
+                      }`}
+                    >
+                      {ticket.status === 5
+                        ? "Finalizado"
+                        : ticket.status === 3
+                          ? "Aprovado"
+                          : ticket.status === 4
+                            ? "Cancelado"
+                            : ticket.status === 2
+                              ? "Pendente"
+                              : "Gerado"}
                     </div>
                   </div>
                 </div>
