@@ -92,8 +92,8 @@ export function CreateEvent() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
+        <div className="md:grid md:grid-cols-2 gap-7">
+          <div className="mb-2">
             <label className="block text-sm font-bold text-gray-700 mb-2">
               Data
             </label>
@@ -107,7 +107,7 @@ export function CreateEvent() {
             />
           </div>
 
-          <div>
+          <div className="mb-2">
             <label className="block text-sm font-bold text-gray-700 mb-2">
               Capacidade Total
             </label>
