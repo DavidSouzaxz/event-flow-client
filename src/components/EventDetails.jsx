@@ -29,6 +29,7 @@ export function EventDetails() {
   const [cupomInvalid, setCupomInvalid] = useState(false);
   const [validatingCupom, setValidatingCupom] = useState(false);
   const [ticketsIsPresent, setTicketsIsPresent] = useState(false);
+  const [userTicketCount, setUserTicketCount] = useState(0);
 
   const handleApplyDiscount = async () => {
     setLoading(true);
@@ -66,26 +67,18 @@ export function EventDetails() {
   }, [id]);
 
   useEffect(() => {
-    if (!token) {
-      setTicketsIsPresent(false);
-      return;
-    }
+    if (!token) return;
 
     api
-      .get(`/my-tickets`, {
+      .get(`/events/${id}/availability`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        const hasTicket = res.data.some(
-          (ticket) =>
-            ticket.eventId === id || (ticket.event && ticket.event.id === id),
-        );
-        setTicketsIsPresent(hasTicket);
+        setTicketsIsPresent(res.data.hasReachedLimit);
+        setUserTicketCount(res.data.userTicketCount);
       })
-      .catch((err) => {
-        console.error("Erro ao verificar ingressos:", err);
-      });
-  }, [token, id]);
+      .catch((err) => console.error("Erro ao verificar disponibilidade:", err));
+  }, [id, token]);
 
   const subtotal = event ? event.price * selectedTickets : 0;
   const discountAmount = (subtotal * discountPercent) / 100;
@@ -95,7 +88,7 @@ export function EventDetails() {
     setLoading(true);
     if (!signed) return navigate("/login");
 
-    if (selectedTickets > event.capacity) {
+    if (selectedTickets > event.capacity - userTicketCount) {
       return toast.error(
         "Quantidade selecionada maior que ingressos disponíveis.",
       );
@@ -217,7 +210,7 @@ export function EventDetails() {
                           {Array.from(
                             {
                               length: Math.min(
-                                event.ticketLimitPerPerson,
+                                event.ticketLimitPerPerson - userTicketCount,
                                 event.capacity || 1,
                               ),
                             },
@@ -322,13 +315,16 @@ export function EventDetails() {
 
                   <button
                     onClick={handleBooking}
-                    className="w-full mt-8 bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 transition-all shadow-xl shadow-indigo-100 hover:cursor-pointer"
+                    className="w-full mt-8 bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 transition-all shadow-xl text-center shadow-indigo-100 hover:cursor-pointer"
                     disabled={isSoldOut || loading}
                   >
                     {isSoldOut ? (
                       "Esgotado"
                     ) : loading ? (
-                      <Loader2 className="animate-spin" size={16} />
+                      <Loader2
+                        className="animate-spin flex justify-center mx-auto"
+                        size={16}
+                      />
                     ) : (
                       "Reservar"
                     )}
