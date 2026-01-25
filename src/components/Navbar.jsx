@@ -134,24 +134,24 @@ export function Navbar() {
 
       {/* MOBILE DRAWER (O que aparece ao clicar no hambúrguer) */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-2 shadow-lg animate-in slide-in-from-top duration-300">
+        <div className="md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-2 shadow-lg animate-in slide-in-from-top duration-300 dark:bg-gray-800 dark:border-gray-600">
           {signed ? (
             <>
               <Link
                 to="/profile"
                 onClick={toggleMenu}
-                className="flex items-center gap-4 py-4 border-b border-gray-50 mb-2 hover:bg-gray-50 rounded-xl px-2 transition-colors"
+                className="flex items-center gap-4 py-4 border-b border-gray-50 mb-2 hover:bg-gray-50 rounded-xl px-2 transition-colors dark:border-gray-500 dark:hover:bg-gray-700"
               >
                 <img
                   src={user?.avatarUrl}
                   alt="Avatar"
-                  className="w-12 h-12 rounded-full border-2 border-indigo-500 object-cover"
+                  className="w-12 h-12 rounded-full border-2 border-indigo-500 object-cover dark:border-indigo-600"
                 />
                 <div>
                   <p className="text-xs text-gray-400 uppercase font-black tracking-widest">
                     Meu Perfil
                   </p>
-                  <p className="text-gray-900 font-bold text-lg">
+                  <p className="text-gray-900 font-bold text-lg dark:text-gray-300">
                     {user?.name}
                   </p>
                 </div>
@@ -165,7 +165,7 @@ export function Navbar() {
               <Link
                 to="/my-tickets"
                 onClick={toggleMenu}
-                className="flex items-center gap-3 p-3 text-gray-600 font-bold hover:bg-indigo-50 rounded-xl"
+                className="flex items-center gap-3 p-3 text-gray-600 font-bold hover:bg-indigo-50 rounded-xl dark:text-gray-300 "
               >
                 <Ticket size={20} className="text-indigo-600" /> Meus Ingressos
               </Link>
@@ -173,7 +173,7 @@ export function Navbar() {
                 <Link
                   to="/dashboard"
                   onClick={toggleMenu}
-                  className="flex items-center gap-3 p-3 text-gray-600 font-bold hover:bg-indigo-50 rounded-xl"
+                  className="flex items-center gap-3 p-3 text-gray-600 font-bold hover:bg-indigo-50 rounded-xl dark:text-gray-300 "
                 >
                   <LayoutDashboard size={20} className="text-indigo-600" />{" "}
                   Painel de Controle
@@ -183,7 +183,7 @@ export function Navbar() {
                 <Link
                   to="/admin-tickets"
                   onClick={toggleMenu}
-                  className="flex items-center gap-3 p-3 text-gray-600 font-bold hover:bg-indigo-50 rounded-xl"
+                  className="flex items-center gap-3 p-3 text-gray-600 font-bold hover:bg-indigo-50 rounded-xl dark:text-gray-300 "
                 >
                   <Check size={20} className="text-indigo-600" /> Check-ins
                 </Link>
@@ -203,7 +203,7 @@ export function Navbar() {
               <Link
                 to="/login"
                 onClick={toggleMenu}
-                className="text-center p-3 text-gray-600 font-bold border border-gray-200 rounded-xl"
+                className="text-center p-3 text-gray-600 font-bold border border-gray-200 rounded-xl dark:border-gray-500 dark:text-gray-300"
               >
                 Entrar
               </Link>
