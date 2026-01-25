@@ -32,28 +32,28 @@ export function Register() {
 
   return (
     <PageTransition>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
         <form
           onSubmit={handleSubmit}
-          className="p-8 bg-white shadow-xl rounded-2xl w-96"
+          className="p-8 bg-white shadow-xl rounded-2xl w-96 dark:bg-gray-800"
         >
-          <h2 className="text-2xl font-bold mb-6 text-indigo-600">
+          <h2 className="text-2xl font-bold mb-6 text-indigo-600 dark:text-gray-300 text-center">
             Criar Conta
           </h2>
           <input
-            className="w-full p-3 mb-4 border rounded-lg"
+            className="w-full p-3 mb-4 border rounded-lg text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
             placeholder="Nome"
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
           <input
-            className="w-full p-3 mb-4 border rounded-lg"
+            className="w-full p-3 mb-4 border rounded-lg text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
             placeholder="E-mail"
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
           />
           <input
-            className="w-full p-3 mb-6 border rounded-lg"
+            className="w-full p-3 mb-6 border rounded-lg text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
             type="password"
             placeholder="Senha"
             onChange={(e) =>

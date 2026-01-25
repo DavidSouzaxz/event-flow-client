@@ -8,12 +8,16 @@ import {
   X,
   LayoutDashboard,
   Check,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { useState } from "react";
+import { UseTheme } from "../hook/UseTheme.jsx";
 
 export function Navbar() {
   const { user, logout, signed } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, toggleTheme } = UseTheme();
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -24,13 +28,13 @@ export function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white dark:bg-gray-900 dark:border-gray-800 border-b border-gray-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* LOGO */}
           <Link
             to="/"
-            className="text-2xl font-black text-indigo-600 flex items-center gap-2 tracking-tighter"
+            className="text-2xl font-black text-indigo-600  flex items-center gap-2 tracking-tighter"
           >
             <Calendar size={28} strokeWidth={3} />
             <span>EventFlow</span>
@@ -38,18 +42,24 @@ export function Navbar() {
 
           {/* DESKTOP MENU */}
           <div className="hidden md:flex items-center gap-6">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:cursor-pointer transition-all"
+            >
+              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
             {signed ? (
               <>
                 <Link
                   to="/my-tickets"
-                  className="text-gray-600 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
+                  className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
                 >
                   <Ticket size={18} /> Meus Ingressos
                 </Link>
                 {user?.role === "ADMIN" && (
                   <Link
                     to="/dashboard"
-                    className="text-gray-600 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
+                    className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
                   >
                     <LayoutDashboard size={18} /> Painel
                   </Link>
@@ -57,24 +67,23 @@ export function Navbar() {
                 {user?.role === "ADMIN" && (
                   <Link
                     to="/admin-tickets"
-                    className="text-gray-600 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
+                    className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 flex items-center gap-1 font-bold text-sm transition"
                   >
                     <Check size={18} /> Check-ins
                   </Link>
                 )}
                 <div className="flex items-center gap-5 pl-4 border-l border-gray-200">
-                  {/* Imagem de Perfil Dinâmica */}
-                  <div className="flex hover:cursor-pointer hover:scale-105 transition-transform">
-                    <Link to="/profile" className="flex items-center">
+                  <div className="flex hover:cursor-pointer hover:scale-105 transition-transform ">
+                    <Link to="/profile" className="flex items-center gap-2 ">
                       <img
                         src={
                           user?.avatarUrl ||
                           `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`
                         }
                         alt="Avatar"
-                        className="w-10 h-10 rounded-full border-2 border-indigo-50 shadow-sm object-cover group-hover:border-indigo-500 transition-all "
+                        className="w-10 h-10 rounded-full border-2 border-indigo-50 shadow-sm object-cover group-hover:border-indigo-500 transition-all dark:hover:border-indigo-600"
                       />
-                      <span className="text-sm font-bold text-gray-800">
+                      <span className="text-sm font-bold text-gray-800 dark:text-gray-300 dark:hover:text-indigo-600">
                         Olá, {user?.name.split(" ")[0]}
                       </span>
                     </Link>
@@ -89,12 +98,15 @@ export function Navbar() {
               </>
             ) : (
               <div className="flex items-center gap-4">
-                <Link to="/login" className="text-gray-600 font-bold text-sm">
+                <Link
+                  to="/login"
+                  className="text-gray-600 dark:text-white font-bold text-sm dark:hover:text-indigo-600"
+                >
                   Entrar
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-indigo-600 text-white px-5 py-2 rounded-xl font-bold text-sm hover:bg-indigo-700 transition"
+                  className="bg-indigo-600 text-white px-5 py-2 rounded-xl font-bold text-sm hover:bg-indigo-700 transition dark:hover:bg-gray-200 dark:hover:text-indigo-600 "
                 >
                   Cadastrar
                 </Link>
@@ -104,6 +116,12 @@ export function Navbar() {
 
           {/* MOBILE MENU BUTTON (Hamburger) */}
           <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:cursor-pointer transition-all"
+            >
+              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
             <button
               onClick={toggleMenu}
               className="text-gray-600 p-2 outline-none"

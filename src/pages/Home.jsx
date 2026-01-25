@@ -58,7 +58,7 @@ export function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen dark:bg-gray-900 bg-white transition-colors">
       <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -81,9 +81,9 @@ export function Home() {
               placeholder="Pesquisar por nome ou cidade..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-white w-full py-3 px-8 pr-14 rounded-full text-indigo-600  outline-none shadow-2xl  focus:ring-4 focus:ring-indigo-500/20 transition-all text-lg"
+              className="bg-white w-full py-3 px-8 pr-14 rounded-full text-indigo-600  outline-none shadow-2xl  focus:ring-4 focus:ring-indigo-500/20 transition-all text-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
             />
-            <Search className="absolute right-6 top-3.5 text-gray-400 group-focus-within:text-indigo-600 transition-colors" />
+            <Search className="absolute right-6 top-3.5 text-gray-400 group-focus-within:text-indigo-600 transition-colors dark:group-focus-within:text-gray-400" />
           </div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -159,20 +159,23 @@ export function Home() {
         {/* GRID DE EVENTOS FILTRADOS */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <p className="text-gray-500 font-medium italic">
+            <p className="text-gray-500 dark:text-white font-medium italic">
               Carregando eventos...
             </p>
-            <Loader2 className="animate-spin text-gray-400" size={25} />
+            <Loader2
+              className="animate-spin text-gray-400 dark:text-gray-600"
+              size={25}
+            />
           </div>
         ) : (
           <div className="max-w-7xl mx-auto px-6 py-16">
             <div className="flex items-center justify-between mb-12">
-              <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">
+              <h2 className="text-3xl font-black text-gray-900 dark:text-gray-300 tracking-tighter uppercase">
                 {searchTerm
                   ? `Resultados para: ${searchTerm}`
                   : "Próximos Eventos"}
               </h2>
-              <span className="text-gray-400 font-bold">
+              <span className="text-gray-400 dark:text-gray-300 font-bold">
                 {filteredEvents.length} eventos encontrados
               </span>
             </div>
@@ -182,7 +185,7 @@ export function Home() {
                 {filteredEvents.map((event) => (
                   <div
                     key={event.id}
-                    className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col"
+                    className="group bg-white dark:bg-gray-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700 flex flex-col"
                   >
                     <div className="relative h-60 overflow-hidden">
                       <img
@@ -190,14 +193,14 @@ export function Home() {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       <div className="absolute top-5 left-5">
-                        <span className="bg-white text-gray-900 px-4 py-1.5 rounded-full text-[10px] font-black uppercase shadow-lg">
+                        <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-300 px-4 py-1.5 rounded-full text-[10px] font-black uppercase shadow-lg">
                           {event.price === 0 ? "Grátis" : "Premium"}
                         </span>
                       </div>
                     </div>
 
                     <div className="p-8">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-300 mb-4 leading-tight">
                         {event.title}
                       </h3>
                       <div className="flex flex-col gap-2 text-gray-500 text-sm mb-8 font-medium">
@@ -211,8 +214,8 @@ export function Home() {
                         </p>
                       </div>
 
-                      <div className="flex items-center justify-between pt-6 border-t border-gray-50">
-                        <span className="text-2xl font-bold text-gray-900 tracking-tighter">
+                      <div className="flex items-center justify-between pt-6 border-t border-gray-100 dark:border-gray-700">
+                        <span className="text-2xl font-bold text-gray-900 tracking-tighter dark:text-gray-300">
                           {event.price === 0
                             ? "Grátis"
                             : currencyFormatter.format(event.price)}
@@ -229,7 +232,7 @@ export function Home() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
+              <div className="text-center py-20 bg-gray-50 dark:bg-gray-800 rounded-[3rem] border-2 border-dashed border-gray-200">
                 <p className="text-xl text-gray-400 font-bold">
                   Nenhum evento encontrado.
                 </p>

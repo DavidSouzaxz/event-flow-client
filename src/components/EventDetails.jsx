@@ -86,10 +86,8 @@ export function EventDetails() {
       </div>
     );
 
-  
   const activeBatch = event.batches?.find((b) => b.limit > 0) || null;
 
-  
   const currentPrice = activeBatch ? activeBatch.price : event.price;
 
   const subtotal = currentPrice * selectedTickets;
@@ -102,7 +100,6 @@ export function EventDetails() {
     setLoading(true);
     if (!signed) return navigate("/login");
 
-    
     const availableLimit = activeBatch ? activeBatch.limit : event.capacity;
 
     if (selectedTickets > availableLimit - userTicketCount) {
@@ -119,6 +116,7 @@ export function EventDetails() {
           eventId: id,
           quantity: selectedTickets,
           couponCode: discountApplied ? discountCode : null,
+          batchId: activeBatch ? activeBatch.id : null,
         },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -127,6 +125,7 @@ export function EventDetails() {
       navigate("/my-tickets");
     } catch (err) {
       toast.error("Erro ao reservar ingresso.");
+      console.error("Erro ao reservar ingresso:", err);
     } finally {
       setLoading(false);
     }
@@ -145,29 +144,29 @@ export function EventDetails() {
           <div className="lg:col-span-2">
             <img
               src={event.imageUrl}
-              className="w-full h-[450px] object-cover rounded-[40px] shadow-2xl shadow-indigo-100"
+              className="w-full h-[450px] object-cover rounded-[40px] shadow-2xl shadow-indigo-100 dark:shadow-black/20"
               alt={event.title}
             />
 
             <div className="mt-10">
-              <h1 className="text-5xl font-black text-gray-900 tracking-tight">
+              <h1 className="text-5xl font-black text-gray-900 dark:text-gray-300 tracking-tight">
                 {event.title}
               </h1>
               <div className="mt-6 flex flex-wrap gap-4">
-                <span className="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full font-bold text-sm">
+                <span className="flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 px-4 py-2 rounded-full font-bold text-sm">
                   <Calendar size={18} />
                   {new Date(event.date).toLocaleDateString("pt-BR")}
                 </span>
-                <span className="flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-full font-bold text-sm">
+                <span className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 dark:border-gray-700 text-gray-500 px-4 py-2 rounded-full font-bold text-sm">
                   <MapPin size={18} /> {event.location}
                 </span>
               </div>
 
               <div className="mt-10 border-t pt-10">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-200 mb-4">
                   Sobre o evento
                 </h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
                   {event.description}
                 </p>
               </div>
@@ -175,26 +174,27 @@ export function EventDetails() {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-white p-8 rounded-[32px] shadow-xl border border-gray-100 sticky top-28">
+            <div className="bg-white dark:bg-gray-900 p-8 rounded-[32px] shadow-xl border border-gray-100 dark:border-gray-800 sticky top-28">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold">
+                <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-indigo-600 font-bold">
                   {event.owner.name.charAt(0)}
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 uppercase font-bold">
+                  <p className="text-xs text-gray-400 dark:text-gray-500 uppercase font-bold">
                     Organizador
                   </p>
-                  <p className="text-gray-900 font-bold">{event.owner.name}</p>
+                  <p className="text-gray-900 dark:text-gray-200 font-bold">
+                    {event.owner.name}
+                  </p>
                 </div>
               </div>
 
-             
               {activeBatch && (
-                <div className="bg-indigo-50 p-3 rounded-xl mb-4 border border-indigo-100 flex justify-between items-center">
-                  <span className="text-indigo-700 font-bold text-xs uppercase tracking-widest">
+                <div className="bg-indigo-50 dark:bg-indigo-900 p-3 rounded-xl mb-4 border border-indigo-100 dark:border-indigo-800 flex justify-between items-center">
+                  <span className="text-indigo-700 dark:text-indigo-300 font-bold text-xs uppercase tracking-widest">
                     {activeBatch.name}
                   </span>
-                  <span className="text-[10px] text-indigo-400 font-medium">
+                  <span className="text-[10px] text-indigo-400 dark:text-indigo-600 font-medium">
                     {activeBatch.limit} restando
                   </span>
                 </div>
@@ -202,7 +202,7 @@ export function EventDetails() {
 
               {!ticketsIsPresent ? (
                 <div>
-                  <div className="space-y-4 pt-6 border-t border-gray-50">
+                  <div className="space-y-4 pt-6 border-t border-gray-100 dark:border-gray-700">
                     <div className="flex justify-between items-center text-gray-500">
                       <span>Preço unitário</span>
                       <span className="text-2xl font-black text-indigo-600">
@@ -214,14 +214,14 @@ export function EventDetails() {
                   </div>
 
                   {!isSoldOut && (
-                    <div className="flex items-center gap-4 mt-6 text-sm text-gray-500 font-medium">
+                    <div className="flex items-center gap-4 mt-6 text-sm text-gray-500 dark:text-gray-400 font-medium">
                       <div>
                         <select
                           value={selectedTickets}
                           onChange={(e) =>
                             setSelectedTickets(Number(e.target.value))
                           }
-                          className="w-24 bg-gray-50 p-2 rounded-xl font-bold text-gray-900"
+                          className="w-24 bg-gray-50 dark:bg-gray-800 p-2 rounded-xl font-bold text-gray-900 dark:text-gray-200"
                         >
                           {Array.from(
                             {
@@ -253,7 +253,7 @@ export function EventDetails() {
                   )}
 
                   {!isSoldOut && (
-                    <div className="w-full mt-6 pt-6 border-t border-gray-50 flex flex-col text-gray-900 font-medium text-lg">
+                    <div className="w-full mt-6 pt-6 border-t border-gray-100 dark:border-gray-700 flex flex-col text-gray-900 dark:text-gray-200 font-medium text-lg">
                       <div className="flex flex-col items-end">
                         <p className="text-sm font-light">
                           {selectedTickets} Ticket
@@ -277,12 +277,11 @@ export function EventDetails() {
                         </span>
                       </div>
 
-                     
                       <div className="w-full flex justify-between items-center mt-4">
                         <input
                           type="text"
                           placeholder="CUPOM"
-                          className={`w-40 p-3 bg-gray-50 rounded-xl outline-none border-2 transition-all ${
+                          className={`w-40 p-3 bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 rounded-xl outline-none border-2 transition-all ${
                             cupomInvalid
                               ? "border-red-200 focus:border-red-400"
                               : "border-transparent focus:border-indigo-500"
@@ -293,6 +292,7 @@ export function EventDetails() {
                           }
                           disabled={discountApplied || validatingCupom}
                         />
+
                         <button
                           type="button"
                           onClick={
@@ -301,7 +301,7 @@ export function EventDetails() {
                               : handleApplyDiscount
                           }
                           disabled={validatingCupom}
-                          className={`p-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all hover:cursor-pointer ${
+                          className={`p-3 rounded-xl dark:bg-gray-700 font-black text-xs uppercase tracking-widest transition-all hover:cursor-pointer ${
                             discountApplied
                               ? "bg-red-50 text-red-500 hover:bg-red-100"
                               : "bg-gray-900 text-white hover:bg-indigo-600"
@@ -316,12 +316,17 @@ export function EventDetails() {
                           )}
                         </button>
                       </div>
+                      {cupomInvalid && !discountApplied && (
+                        <div className="text-red-500 text-xs mt-1">
+                          Cupom inválido
+                        </div>
+                      )}
                     </div>
                   )}
 
                   <button
                     onClick={handleBooking}
-                    className="w-full mt-8 bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 transition-all shadow-xl text-center shadow-indigo-100 hover:cursor-pointer disabled:opacity-50"
+                    className="w-full mt-8 bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 transition-all shadow-xl text-center dark:shadow-sm dark:shadow-indigo-900 dark:hover:bg-gray-100 dark:hover:text-indigo-600 shadow-indigo-100 hover:cursor-pointer disabled:opacity-50"
                     disabled={isSoldOut || loading}
                   >
                     {isSoldOut ? (
