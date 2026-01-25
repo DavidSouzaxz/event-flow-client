@@ -6,6 +6,7 @@ import { ImagePlus, MapPin, Calendar, DollarSign, Loader2 } from "lucide-react";
 import { Save, ArrowLeft } from "lucide-react";
 import api from "../services/api";
 import toast from "react-hot-toast";
+import { form } from "framer-motion/client";
 
 export function CreateEvent() {
   const { token } = useAuth();
@@ -19,9 +20,25 @@ export function CreateEvent() {
     date: "",
     location: "",
     price: "",
+    batches: [],
     ticketLimitPerPerson: "",
     capacity: "",
   });
+  const [batches, setBatches] = useState([
+    { name: "1º Lote", price: "", limit: "" },
+  ]);
+  const handleAddBatch = () => {
+    setBatches([
+      ...batches,
+      { name: `${batches.length + 1}º Lote`, price: "", limit: "" },
+    ]);
+  };
+
+  const handleBatchChange = (index, field, value) => {
+    const newBatches = [...batches];
+    newBatches[index][field] = value;
+    setBatches(newBatches);
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -36,9 +53,18 @@ export function CreateEvent() {
     setLoading(true);
 
     const data = new FormData();
-    Object.keys(formData).forEach((key) => {
-      data.append(key, formData[key]);
-    });
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("date", formData.date);
+    data.append("location", formData.location);
+    data.append("price", formData.price);
+    data.append("capacity", formData.capacity);
+
+    
+    data.append("ticketLimitPerPerson", formData.ticketLimitPerPerson);
+
+   
+    data.append("batches", JSON.stringify(batches));
 
     if (selectedFile) {
       data.append("image", selectedFile);
@@ -54,10 +80,10 @@ export function CreateEvent() {
       toast.success("Evento criado com sucesso!");
       navigate("/");
     } catch (err) {
-      toast.error(
-        "Erro ao criar evento. Verifique se todos os campos estão preenchidos.",
-      );
+      const errorMsg = err.response?.data?.error || "Erro ao criar evento.";
+      toast.error(errorMsg);
     } finally {
+      console.log(formData);
       setLoading(false);
     }
   };
@@ -188,6 +214,51 @@ export function CreateEvent() {
               onChange={handleFileChange}
             />
           </div>
+        </div>
+        <div className="space-y-4">
+          <label className="block text-sm font-bold text-gray-700 mb-2">
+            Configuração de Lotes
+          </label>
+          {batches.map((batch, index) => (
+            <div
+              key={index}
+              className="grid grid-cols-3 gap-2 p-4 bg-gray-50 rounded-xl"
+            >
+              <input
+                placeholder="Nome (ex: Promocional)"
+                value={batch.name}
+                onChange={(e) =>
+                  handleBatchChange(index, "name", e.target.value)
+                }
+                className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <input
+                type="number"
+                placeholder="Preço"
+                value={batch.price}
+                onChange={(e) =>
+                  handleBatchChange(index, "price", e.target.value)
+                }
+                className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <input
+                type="number"
+                placeholder="Qtd Ingressos"
+                value={batch.limit}
+                onChange={(e) =>
+                  handleBatchChange(index, "limit", e.target.value)
+                }
+                className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddBatch}
+            className="text-indigo-600 font-bold text-sm hover:underline"
+          >
+            + Adicionar outro lote
+          </button>
         </div>
 
         <div>
