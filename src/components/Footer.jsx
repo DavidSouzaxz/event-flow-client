@@ -13,7 +13,6 @@ export function Footer() {
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Coluna 1: Branding */}
           <div className="col-span-1 md:col-span-2">
             <Link
               to="/"
@@ -28,7 +27,6 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Coluna 2: Atalhos */}
           <div>
             <h4 className="text-sm font-black uppercase dark:text-gray-300 text-gray-900 tracking-widest mb-6">
               Navegação
@@ -39,14 +37,16 @@ export function Footer() {
                   Explorar Eventos
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/my-tickets"
-                  className="hover:text-indigo-600 transition"
-                >
-                  Meus Ingressos
-                </Link>
-              </li>
+              {signed && (
+                <li>
+                  <Link
+                    to="/my-tickets"
+                    className="hover:text-indigo-600 transition"
+                  >
+                    Meus Ingressos
+                  </Link>
+                </li>
+              )}
               {!signed && (
                 <li>
                   <Link
@@ -60,7 +60,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Coluna 3: Redes Sociais */}
           <div>
             <h4 className="text-sm font-black uppercase text-gray-900 dark:text-gray-300 tracking-widest mb-6">
               Social
