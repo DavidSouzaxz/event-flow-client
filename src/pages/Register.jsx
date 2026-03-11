@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -21,7 +21,6 @@ export function Register() {
     try {
       const response = await api.post(`/register`, formData);
       toast.success(`Bem-vindo, ${response.data.name}! Conta criada.`);
-      // Redireciona para página de envio de verificação, sem enviar e-mail aqui
       navigate("/send-verify-email", { state: { email: formData.email } });
     } catch (err) {
       toast.error("Erro ao cadastrar.");
@@ -67,6 +66,23 @@ export function Register() {
               "Cadastrar"
             )}
           </button>
+          <div className="mt-6 text-center space-y-2">
+            <Link
+              to="/login"
+              className="block text-sm text-gray-500 cursor-default"
+            >
+              Já tem uma conta?{" "}
+              <span className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer">
+                Login
+              </span>
+            </Link>
+            <Link
+              to="/send-verify-email"
+              className="block text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+            >
+              Reenviar e-mail de verificação
+            </Link>
+          </div>
         </form>
       </div>
     </PageTransition>

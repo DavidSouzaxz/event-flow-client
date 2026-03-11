@@ -46,7 +46,7 @@ export function Login() {
           className="p-8 bg-white shadow-xl rounded-2xl w-96 border border-gray-100 dark:bg-gray-800 dark:border-gray-700"
         >
           <h2 className="text-2xl font-bold mb-6 text-indigo-600 dark:text-gray-300 text-center">
-            EventFlow
+            EventFlow Login
           </h2>
           <input
             type="email"
@@ -71,9 +71,12 @@ export function Login() {
           <div className="mt-6 text-center space-y-2">
             <Link
               to="/register"
-              className="block text-sm text-gray-500 hover:text-indigo-600"
+              className="block text-sm text-gray-500 cursor-default"
             >
-              Não tem uma conta? Registre-se
+              Não tem uma conta?{" "}
+              <span className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer">
+                Registre-se
+              </span>
             </Link>
             <Link
               to="/send-verify-email"
