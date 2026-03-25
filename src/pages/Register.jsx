@@ -2,7 +2,15 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
-import { EyeClosed, Loader2, Eye, Mail, KeyRound, User } from "lucide-react";
+import {
+  EyeClosed,
+  Loader2,
+  Eye,
+  Mail,
+  KeyRound,
+  User,
+  ArrowBigLeft,
+} from "lucide-react";
 import toast from "react-hot-toast";
 import { PageTransition } from "../components/PageTransition";
 
@@ -63,8 +71,19 @@ export function Register() {
           onSubmit={handleSubmit}
           className="p-8 bg-white shadow-xl rounded-2xl w-96 dark:bg-gray-800"
         >
+          <button
+            className="flex items-center gap-1 pb-2 text-[12px] hover:text-indigo-600 transform transition cursor-pointer"
+            type="button"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowBigLeft
+              className="hover:text-indigo-600 transform transition cursor-pointer"
+              size={17}
+            />
+            Voltar
+          </button>
           <h2 className="text-2xl font-bold mb-6 text-indigo-600 dark:text-gray-300 text-center">
-            Criar Conta
+            Eventflow <span className="text-indigo-700">Cadastro</span>
           </h2>
           <div className="relative">
             <User

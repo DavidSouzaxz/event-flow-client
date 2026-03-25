@@ -6,15 +6,14 @@ import { PageTransition } from "../components/PageTransition";
 
 export function VerifyEmail() {
   const [searchParams] = useSearchParams();
-  const [status, setStatus] = useState("loading"); // loading, success, error
+  const [status, setStatus] = useState("loading");
   const hasCalledApi = useRef(false);
   const token = searchParams.get("token");
 
   useEffect(() => {
-    // Se o token não existe ou se já chamamos a API antes, não faz nada
     if (!token || hasCalledApi.current) return;
 
-    hasCalledApi.current = true; // Marca que a chamada foi feita
+    hasCalledApi.current = true;
 
     api
       .get(`/verify-email?token=${token}`)
