@@ -48,7 +48,7 @@ export function MyTickets() {
           <Ticket className="text-indigo-600" size={32} /> Meus Ingressos
         </h1>
         {tickets.length === 0 ? (
-          <div className="bg-gray-50 rounded-3xl py-16 px-6 text-center border-2 border-dashed border-gray-200">
+          <div className="bg-gray-100 dark:bg-gray-800 dark:border-gray-700 rounded-3xl py-16 px-6 text-center border-2 border-dashed border-gray-200">
             <p className="text-gray-500 font-bold">
               Ainda não compraste nenhum ingresso.
             </p>
@@ -58,16 +58,16 @@ export function MyTickets() {
             {tickets.map((ticket) => (
               <div
                 key={ticket.id}
-                className="bg-white border rounded-[2rem] p-5 md:p-6 flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-lg transition-all duration-300"
+                className="bg-white dark:bg-gray-800 dark:border-gray-700 border rounded-[2rem] p-5 md:p-6 flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-lg transition-all duration-300"
               >
                 {/* QR Code centralizado no mobile */}
-                <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 shrink-0">
+                <div className="bg-gray-100 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-2xl border border-gray-100 shrink-0">
                   <QRCodeSVG value={`ticket-auth:${ticket.id}`} size={130} />
                 </div>
 
                 {/* Informações do Evento - Texto alinhado ao centro no mobile */}
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight">
+                  <h3 className="text-xl md:text-2xl font-black dark:text-gray-300 text-gray-900 leading-tight">
                     {ticket.event.title}
                   </h3>
 

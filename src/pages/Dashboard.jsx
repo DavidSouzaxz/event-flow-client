@@ -114,7 +114,7 @@ export function Dashboard() {
         </button>
         <div className="flex flex-col md:flex-row justify-between mb-10 gap-6">
           <div>
-            <h1 className="text-4xl font-black text-gray-900 uppercase tracking-tighter">
+            <h1 className="text-4xl font-black text-gray-900 dark:text-gray-300 uppercase tracking-tighter">
               Painel do Organizador
             </h1>
 
@@ -125,21 +125,21 @@ export function Dashboard() {
           <div className="flex flex-col gap-4">
             <Link
               to="/create-event"
-              className="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-indigo-100"
+              className="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-indigo-100 dark:shadow-indigo-400 dark:shadow-sm dark:hover:shadow-lg   dark:hover:shadow-indigo-800 transform transition-all hover:scale-105 dark:hover:bg-indigo-600 dark:hover:text-gray-200"
             >
               <Plus size={20} /> NOVO EVENTO
             </Link>
             <Link
               to="/coupons-manager"
-              className="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-indigo-100"
+              className="bg-indigo-600 text-white px-6 py-4 rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-indigo-100 dark:shadow-indigo-400 dark:shadow-sm dark:hover:shadow-lg  dark:hover:shadow-indigo-800 transform transition-all hover:scale-105 dark:hover:bg-indigo-600 dark:hover:text-gray-200"
             >
               <Ticket size={20} /> GERAR CUPOM
             </Link>
           </div>
         </div>
-        <div className="bg-white p-6 md:p-10 rounded-[2.5rem] border border-gray-100 shadow-sm mb-12">
+        <div className="bg-white p-6 md:p-10 rounded-[2.5rem] border dark:bg-gray-700 dark:border-gray-700 shadow-sm mb-12">
           <div className="mb-8">
-            <h2 className="text-xl font-black text-gray-900 uppercase tracking-tighter">
+            <h2 className="text-xl font-black text-gray-900 dark:text-gray-200 uppercase tracking-tighter">
               Desempenho de Vendas
             </h2>
             <p className="text-sm text-gray-400 font-medium">
@@ -190,17 +190,17 @@ export function Dashboard() {
         </div>
 
         {/* STATS */}
-        <div className="md:flex md:w-5/10 grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-          <div className="md:w-5/10 bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
-            <p className="md:text-[12px] text-gray-400 font-bold text-[10px] uppercase tracking-widest">
+        <div className="md:flex md:w-5/10 grid grid-cols-2 md:grid-cols-3 gap-4 mb-10 ">
+          <div className="md:w-5/10 bg-white dark:bg-gray-700 dark:border-gray-500 p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+            <p className="md:text-[12px] text-gray-400 dark:text-gray-300 font-bold text-[10px] uppercase tracking-widest">
               Eventos
             </p>
-            <p className="md:text-4xl text-2xl font-black text-gray-900">
+            <p className="md:text-4xl text-2xl font-black text-gray-900 dark:text-gray-100">
               {myEvents.length}
             </p>
           </div>
-          <div className="md:w-5/10 bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
-            <p className="md:text-[12px] text-gray-400 font-bold text-[10px] uppercase tracking-widest">
+          <div className="md:w-5/10 bg-white dark:bg-gray-700 dark:border-gray-500 p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+            <p className="md:text-[12px] text-gray-400 dark:text-gray-300 font-bold text-[10px] uppercase tracking-widest">
               Vendas
             </p>
             <p className="md:text-4xl text-2xl font-black text-emerald-500">
@@ -209,15 +209,15 @@ export function Dashboard() {
           </div>
         </div>
 
-        <div className="grid gap-4 md:hidden">
+        <div className="grid gap-4 md:hidden dark:bg-gray-800 mb-10">
           {myEvents.map((event) => (
             <div
               key={event.id}
-              className="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-sm"
+              className="bg-white dark:bg-gray-700 dark:border-gray-500 p-5 rounded-[2rem] border border-gray-100 shadow-sm"
             >
-              <div className="flex justify-between items-start mb-4">
+              <div className="flex justify-between items-start mb-4 dark:bg-gray-700">
                 <div>
-                  <h3 className="font-black text-gray-900 uppercase text-sm">
+                  <h3 className="font-black text-gray-900 dark:text-gray-100 uppercase text-sm">
                     {event.title}
                   </h3>
                   <p className="text-[10px] text-gray-400 flex items-center gap-1">
@@ -228,7 +228,7 @@ export function Dashboard() {
                   {event._count?.tickets || 0} VENDAS
                 </span>
               </div>
-              <div className="flex justify-between items-center pt-4 border-t border-gray-50">
+              <div className="flex justify-between items-center pt-4 border-t border-gray-50 dark:border-gray-600">
                 <p className="text-xs font-bold text-gray-500">
                   {new Date(event.date).toLocaleDateString()}
                 </p>
@@ -251,10 +251,9 @@ export function Dashboard() {
           ))}
         </div>
 
-        {/* DESKTOP TABLE (Apenas visível em telas médias/grandes) */}
-        <div className="hidden md:block bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+        <div className="hidden md:block bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden dark:bg-gray-700 dark:border-gray-500">
           <table className="w-full text-left">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-gray-50 border-b border-gray-100 dark:bg-gray-700 dark:border-gray-600">
               <tr>
                 <th className="px-8 py-6 text-xs font-black uppercase text-gray-400">
                   Evento
@@ -270,19 +269,22 @@ export function Dashboard() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 dark:bg-gray-700 dark:divide-gray-600">
               {myEvents.map((event) => (
-                <tr key={event.id} className="hover:bg-gray-50/50">
+                <tr
+                  key={event.id}
+                  className="hover:bg-gray-50/50 dark:hover:bg-gray-600"
+                >
                   <td className="px-8 py-6">
-                    <p className="font-bold text-gray-900 uppercase text-sm">
+                    <p className="font-bold text-gray-900 dark:text-gray-300 uppercase text-sm">
                       {event.title}
                     </p>
                   </td>
-                  <td className="px-8 py-6 text-sm font-bold text-gray-600">
+                  <td className="px-8 py-6 text-sm font-bold text-gray-600 dark:text-gray-300">
                     {new Date(event.date).toLocaleDateString()}
                   </td>
                   <td className="px-8 py-6">
-                    <span className="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full font-black text-xs">
+                    <span className="bg-indigo-50 dark:bg-indigo-900 dark:text-gray-300 text-indigo-600 px-4 py-1.5 rounded-full font-black text-xs">
                       {event._count?.tickets || 0} INSCRITOS
                     </span>
                   </td>

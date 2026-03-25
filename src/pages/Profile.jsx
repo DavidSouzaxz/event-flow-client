@@ -68,11 +68,11 @@ export function Profile() {
           <ArrowLeft size={16} /> Voltar
         </button>
 
-        <h1 className="text-3xl font-black text-gray-900 uppercase tracking-tighter mb-8 text-center md:text-left">
+        <h1 className="text-3xl font-black text-gray-900 dark:text-gray-300 uppercase tracking-tighter mb-8 text-center md:text-left">
           Meu Perfil
         </h1>
 
-        <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-xl overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-[2.5rem] border border-gray-100 dark:border-gray-600 shadow-xl overflow-hidden">
           <div className="bg-indigo-600 p-10 flex flex-col items-center">
             <div className="relative group">
               <img
@@ -112,7 +112,8 @@ export function Profile() {
                 />
                 <input
                   type="text"
-                  className="w-full pl-12 p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold"
+                  className="w-full pl-12 p-4 text-gray-400 bg-gray-100 dark:bg-gray-600 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold"
+                  placeholder="Nome Completo"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
@@ -133,7 +134,7 @@ export function Profile() {
                 <input
                   type="email"
                   disabled
-                  className="w-full pl-12 p-4 bg-gray-50 rounded-2xl border-none text-gray-400 font-bold cursor-not-allowed"
+                  className="w-full pl-12 p-4 bg-gray-100 dark:bg-gray-600 rounded-2xl border-none text-gray-400 font-bold cursor-not-allowed"
                   value={formData.email}
                 />
               </div>
@@ -141,10 +142,10 @@ export function Profile() {
 
             <button
               disabled={loading}
-              className="w-full bg-gray-900 text-white py-5 rounded-2xl font-black text-lg hover:bg-indigo-600 transition-all flex items-center justify-center gap-2 hover:cursor-pointer disabled:opacity-50"
+              className="w-full bg-gray-900 text-white py-5 rounded-2xl font-black text-lg hover:bg-indigo-600 transition-all flex items-center justify-center gap-2 hover:cursor-pointer disabled:opacity-50 dark:bg-indigo-600 dark:hover:bg-gray-100 dark:hover:text-indigo-600"
             >
               {loading ? (
-                <Loader2 className="animate-spin" />
+                <Loader2 className="animate-spin text-white dark:text-white" />
               ) : (
                 <>
                   <Save size={20} /> Salvar Alterações

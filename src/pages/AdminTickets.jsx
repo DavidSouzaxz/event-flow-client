@@ -10,7 +10,6 @@ export function AdminTickets() {
   const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
   const loadTickets = async () => {
-    // Busca tickets com status 2 (Pendentes)
     const response = await api.get("/admin/tickets/pendentes");
     setTickets(response.data);
   };
@@ -20,7 +19,7 @@ export function AdminTickets() {
       await api.post(`/tickets/check-in`, { ticketId });
 
       toast.success("Ação realizada com sucesso!");
-      // Remove da lista local após ação
+
       setTickets(tickets.filter((t) => t.id !== ticketId));
     } catch (err) {
       toast.error("Erro ao processar ação no ticket.");

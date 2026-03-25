@@ -50,8 +50,8 @@ export function SendVerifyEmail() {
   return (
     <PageTransition>
       <div className="min-h-[80vh] flex items-center justify-center px-6">
-        <div className="max-w-md w-full bg-white p-10 rounded-[40px] shadow-2xl shadow-indigo-100 border border-gray-50 text-center">
-          <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tighter mb-4">
+        <div className="max-w-md w-full bg-white p-10 rounded-[40px] shadow-2xl shadow-indigo-100 border border-gray-50 text-center dark:bg-gray-800 dark:border-gray-700 dark:shadow-gray-800">
+          <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tighter mb-4 dark:text-gray-50">
             Verifique seu E-mail
           </h2>
           <p className="text-gray-500 mb-8">
@@ -62,13 +62,13 @@ export function SendVerifyEmail() {
 
           {!location.state?.email && !success && (
             <div className="mb-6 relative">
-              <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
+              <Mail className="absolute left-3 top-4 text-gray-400" size={20} />
               <input
                 type="email"
                 placeholder="Seu e-mail cadastrado"
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 dark:border-gray-600 focus:ring-indigo-500 text-gray-700 dark:text-gray-100"
               />
             </div>
           )}

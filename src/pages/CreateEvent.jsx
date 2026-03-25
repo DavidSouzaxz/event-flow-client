@@ -60,10 +60,8 @@ export function CreateEvent() {
     data.append("price", formData.price);
     data.append("capacity", formData.capacity);
 
-    
     data.append("ticketLimitPerPerson", formData.ticketLimitPerPerson);
 
-   
     data.append("batches", JSON.stringify(batches));
 
     if (selectedFile) {
@@ -96,21 +94,21 @@ export function CreateEvent() {
       >
         <ArrowLeft size={16} /> Voltar ao Painel
       </button>
-      <h1 className="text-4xl font-black text-gray-900 mb-8 uppercase tracking-tighter">
+      <h1 className="text-4xl font-black text-gray-900 dark:text-gray-300 mb-8 uppercase tracking-tighter">
         Criar Novo Evento
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 bg-white p-8 rounded-[32px] shadow-xl border border-gray-100"
+        className="space-y-6 bg-white dark:bg-gray-800 p-8 rounded-[32px] shadow-xl border border-gray-100 dark:border-gray-600"
       >
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
             Título do Evento
           </label>
           <input
             required
-            className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-4 text-gray-600 bg-gray-100 dark:text-gray-300 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Ex: Workshop de React"
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
@@ -120,27 +118,27 @@ export function CreateEvent() {
 
         <div className="md:grid md:grid-cols-2 gap-7">
           <div className="mb-2">
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
               Data
             </label>
             <input
               type="datetime-local"
               required
-              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-gray-100 text-gray-600  dark:text-gray-300 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               onChange={(e) =>
                 setFormData({ ...formData, date: e.target.value })
               }
             />
           </div>
 
-          <div className="mb-2">
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+          <div className="mb-2 ">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
               Capacidade Total
             </label>
             <input
               required
               type="number"
-              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-gray-100 text-gray-600 dark:text-gray-300 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="Ex: 100"
               onChange={(e) =>
                 setFormData({ ...formData, capacity: e.target.value })
@@ -148,7 +146,7 @@ export function CreateEvent() {
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
               Preço (R$)
             </label>
             <input
@@ -156,7 +154,7 @@ export function CreateEvent() {
               type="number"
               step="0.01"
               min="0"
-              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-gray-100 text-gray-600 dark:text-gray-300 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="0.00"
               onChange={(e) =>
                 setFormData({ ...formData, price: e.target.value })
@@ -164,7 +162,7 @@ export function CreateEvent() {
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
               Limite de Tickets por Pessoa
             </label>
             <input
@@ -172,7 +170,7 @@ export function CreateEvent() {
               type="number"
               step="1"
               min="0"
-              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-gray-100 text-gray-600 dark:text-gray-300 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="Ex: 5"
               onChange={(e) =>
                 setFormData({
@@ -185,10 +183,10 @@ export function CreateEvent() {
         </div>
 
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
             Imagem de Capa
           </label>
-          <div className="relative w-full h-64 bg-gray-50 rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-gray-300 hover:border-indigo-500 transition-all cursor-pointer overflow-hidden group">
+          <div className="relative w-full h-64 bg-gray-100 dark:bg-gray-600 rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-500 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all cursor-pointer overflow-hidden group">
             {preview ? (
               <img
                 src={preview}
@@ -216,13 +214,13 @@ export function CreateEvent() {
           </div>
         </div>
         <div className="space-y-4">
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
             Configuração de Lotes
           </label>
           {batches.map((batch, index) => (
             <div
               key={index}
-              className="grid grid-cols-3 gap-2 p-4 bg-gray-50 rounded-xl"
+              className="grid grid-cols-3 gap-2 p-4 bg-gray-100 dark:bg-gray-600 rounded-xl"
             >
               <input
                 placeholder="Nome (ex: Promocional)"
@@ -230,7 +228,7 @@ export function CreateEvent() {
                 onChange={(e) =>
                   handleBatchChange(index, "name", e.target.value)
                 }
-                className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full p-4 bg-gray-100 text-gray-600 dark:text-gray-300 dark:border-2 dark:border-gray-500 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               />
               <input
                 type="number"
@@ -239,7 +237,7 @@ export function CreateEvent() {
                 onChange={(e) =>
                   handleBatchChange(index, "price", e.target.value)
                 }
-                className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full p-4 bg-gray-100 text-gray-600 dark:text-gray-300 dark:border-2 dark:border-gray-500 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500 "
               />
               <input
                 type="number"
@@ -248,26 +246,26 @@ export function CreateEvent() {
                 onChange={(e) =>
                   handleBatchChange(index, "limit", e.target.value)
                 }
-                className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full p-4 bg-gray-100 text-gray-600 dark:text-gray-300 dark:border-2 dark:border-gray-500 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           ))}
           <button
             type="button"
             onClick={handleAddBatch}
-            className="text-indigo-600 font-bold text-sm hover:underline"
+            className="text-indigo-600 font-bold text-sm hover:underline dark:text-indigo-400 hover:cursor-pointer transition-all"
           >
             + Adicionar outro lote
           </button>
         </div>
 
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
             Localização
           </label>
           <input
             required
-            className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-4 bg-gray-100  text-gray-600 dark:text-gray-300 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Ex: São Paulo, SP"
             onChange={(e) =>
               setFormData({ ...formData, location: e.target.value })
@@ -276,13 +274,13 @@ export function CreateEvent() {
         </div>
 
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
+          <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
             Descrição
           </label>
           <textarea
             rows="4"
             required
-            className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-4 bg-gray-100 text-gray-600 dark:text-gray-300 dark:bg-gray-600 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Detalhes sobre o que vai acontecer..."
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
@@ -292,7 +290,7 @@ export function CreateEvent() {
 
         <button
           disabled={loading}
-          className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 hover:cursor-pointer transition-all shadow-lg shadow-indigo-100 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-gray-900 hover:cursor-pointer transition-all shadow-lg shadow-indigo-100 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed dark:bg-indigo-500 dark:hover:bg-gray-200 dark:shadow-indigo-400 dark:hover:text-indigo-600 dark:shadow-sm dark:hover:shadow-lg "
         >
           {loading ? (
             <Loader2 className="animate-spin" />

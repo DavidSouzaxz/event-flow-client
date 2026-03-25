@@ -86,10 +86,9 @@ export function CouponManager() {
           <Tag className="text-indigo-600" /> Gerador de Cupons
         </h1>
 
-        {/* FORMULÁRIO DE CRIAÇÃO */}
         <form
           onSubmit={handleCreateCoupon}
-          className="flex flex-col bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl mb-12 md:grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="flex flex-col bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl mb-12 md:grid grid-cols-1 md:grid-cols-2 gap-6 dark:bg-gray-800 dark:border-gray-700"
         >
           <div className="space-y-2">
             <label className="text-xs font-black uppercase text-gray-400 ml-2">
@@ -99,7 +98,7 @@ export function CouponManager() {
               type="text"
               placeholder="EX: VERÃO25"
               required
-              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold uppercase"
+              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold uppercase dark:bg-gray-700 dark:text-gray-200 text-gray-700"
               value={formData.code}
               onChange={(e) =>
                 setFormData({ ...formData, code: e.target.value.toUpperCase() })
@@ -113,10 +112,10 @@ export function CouponManager() {
             </label>
             <input
               type="number"
-              placeholder="10"
+              placeholder="Ex: 10"
               min="0"
               required
-              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold"
+              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold dark:bg-gray-700 dark:text-gray-200 text-gray-700"
               value={formData.discountPercent}
               onChange={(e) =>
                 setFormData({ ...formData, discountPercent: e.target.value })
@@ -131,7 +130,7 @@ export function CouponManager() {
             <input
               type="date"
               required
-              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold"
+              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold dark:bg-gray-700 dark:text-gray-200 text-gray-700"
               value={formData.expirationDate}
               onChange={(e) =>
                 setFormData({ ...formData, expirationDate: e.target.value })
@@ -144,10 +143,10 @@ export function CouponManager() {
             </label>
             <input
               type="number"
-              placeholder="100"
+              placeholder="Ex:100"
               required
               min="0"
-              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold"
+              className="w-full p-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-indigo-500 font-bold dark:bg-gray-700 dark:text-gray-200 text-gray-700"
               value={formData.maxUses}
               onChange={(e) =>
                 setFormData({ ...formData, maxUses: e.target.value })
@@ -157,7 +156,7 @@ export function CouponManager() {
           <div className="flex col-span-2 justify-end ">
             <button
               disabled={loading}
-              className="md:col-span-2 md:mt-2 flex bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-gray-900 transition items-center gap-2 p-4 hover:cursor-pointer mt-5"
+              className="md:col-span-2 md:mt-2 flex bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-gray-900 transition items-center gap-2 p-4 hover:cursor-pointer mt-5 dark:hover:bg-gray-200 dark:hover:text-indigo-600"
             >
               {loading ? (
                 <Loader2 className="animate-spin" />
@@ -172,13 +171,13 @@ export function CouponManager() {
 
         {/* LISTA DE CUPONS */}
         <div className="grid gap-4">
-          <h2 className="text-xl font-black uppercase text-gray-900 ml-2">
+          <h2 className="text-xl font-black uppercase text-gray-900 dark:text-gray-200 ml-2">
             Cupons Ativos
           </h2>
           {coupons.map((c) => (
             <div
               key={c.id}
-              className="bg-white p-6 rounded-3xl border border-gray-100 flex items-center justify-between"
+              className="bg-white dark:bg-gray-700 p-6 rounded-3xl border border-gray-100 dark:border-gray-600 flex items-center justify-between"
             >
               <div>
                 <p className="font-black text-indigo-600 text-lg uppercase">
@@ -189,7 +188,7 @@ export function CouponManager() {
                   {new Date(c.expirationDate).toLocaleDateString()}
                 </p>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center gap-2">
                 <span className="bg-emerald-50 text-emerald-600 px-4 py-1 rounded-full text-[10px] font-black uppercase">
                   {c.usedCount} Usados
                 </span>
