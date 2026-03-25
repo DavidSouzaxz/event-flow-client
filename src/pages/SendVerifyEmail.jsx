@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { Loader2, MailCheck, ArrowRight, Mail } from "lucide-react";
 import { PageTransition } from "../components/PageTransition";
@@ -12,6 +12,7 @@ export function SendVerifyEmail() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [timer, setTimer] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let interval;
@@ -111,12 +112,13 @@ export function SendVerifyEmail() {
           </button>
 
           <div className="mt-8">
-            <Link
-              to="/login"
+            <button
+              type="button"
               className="text-indigo-600 hover:underline font-bold"
+              onClick={() => navigate(-1)}
             >
               Voltar para o Login
-            </Link>
+            </button>
           </div>
         </div>
       </div>

@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
-import { Loader2, Mail, Eye, EyeClosed, KeyRound } from "lucide-react";
+import {
+  Loader2,
+  Mail,
+  Eye,
+  EyeClosed,
+  KeyRound,
+  ArrowBigLeft,
+} from "lucide-react";
 
 import api from "../services/api";
 import toast from "react-hot-toast";
@@ -51,6 +58,17 @@ export function Login() {
           onSubmit={handleLogin}
           className="p-8 bg-white shadow-xl rounded-2xl w-96 border border-gray-100 dark:bg-gray-800 dark:border-gray-700"
         >
+          <button
+            className="flex items-center gap-1 pb-2 text-[12px] hover:text-indigo-600 transform transition cursor-pointer"
+            type="button"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowBigLeft
+              className="hover:text-indigo-600 transform transition cursor-pointer"
+              size={17}
+            />
+            Voltar
+          </button>
           <h2 className="text-2xl font-bold mb-6 text-indigo-600 dark:text-gray-300 text-center">
             EventFlow <span className="text-indigo-700">Login</span>
           </h2>
